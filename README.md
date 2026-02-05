@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="#-quick-start">📖 README</a> •
+  <a href="#quick-start">README</a> •
   <a href="LICENSE">⚖️ License</a>
 </p>
 
@@ -48,13 +48,13 @@
 <br>
 
 <p align="center">
-  <a href="#-quick-start">Quick Start</a> •
-  <a href="#-how-it-works">How It Works</a> •
-  <a href="#-mcp-tools">MCP Tools</a> •
-  <a href="#-transcription-backends">Transcription</a> •
-  <a href="#-configuration">Configuration</a> •
-  <a href="#-troubleshooting">Troubleshooting</a> •
-  <a href="#-license">License</a>
+  <a href="#quick-start">Quick Start</a> •
+  <a href="#how-it-works">How It Works</a> •
+  <a href="#mcp-tools">MCP Tools</a> •
+  <a href="#transcription-backends">Transcription</a> •
+  <a href="#configuration">Configuration</a> •
+  <a href="#troubleshooting">Troubleshooting</a> •
+  <a href="#license">License</a>
 </p>
 
 <p align="center">
@@ -63,7 +63,7 @@
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ```bash
 # Install FFmpeg (required)
@@ -94,38 +94,38 @@ Add to Claude Desktop config (`~/Library/Application Support/Claude/claude_deskt
 
 **Key Features:**
 
-- 🎬 **Scene Detection** — Captures frames at visual transitions, not fixed intervals
-- 🎤 **Local Transcription** — 4 backend options (mlx-whisper, faster-whisper, whisper-cpp, whisper)
-- 🖼️ **Inline Images** — Returns key frames directly in MCP responses
-- 🎯 **Smart Presets** — Auto-configures for screencasts, presentations, movies, interviews
-- ⚡ **Zero Config** — Just pass a video path and it works
-- 🔒 **Privacy First** — Everything runs locally, no data leaves your machine
+- **Scene Detection** — Captures frames at visual transitions, not fixed intervals
+- **Local Transcription** — 4 backend options (mlx-whisper, faster-whisper, whisper-cpp, whisper)
+- **Inline Images** — Returns key frames directly in MCP responses
+- **Smart Presets** — Auto-configures for screencasts, presentations, movies, interviews
+- **Zero Config** — Just pass a video path and it works
+- **Privacy First** — Everything runs locally, no data leaves your machine
 
 ---
 
-## 📚 Documentation
+## Documentation
 
 ### Getting Started
 
-- **[Quick Start](#-quick-start)** — Installation & setup
+- **[Quick Start](#quick-start)** — Installation & setup
 - **[Tutorial](docs/tutorial.md)** — Step-by-step usage guide
-- **[MCP Tools](#-mcp-tools)** — Available tools reference
+- **[MCP Tools](#mcp-tools)** — Available tools reference
 
 ### Guides
 
-- **[Transcription Backends](#-transcription-backends)** — Choose the best backend for your system
-- **[Video Types & Objectives](#-video-types)** — Presets for different content
-- **[Configuration](#-configuration)** — Advanced parameters
+- **[Transcription Backends](#transcription-backends)** — Choose the best backend for your system
+- **[Video Types & Objectives](#video-types)** — Presets for different content
+- **[Configuration](#configuration)** — Advanced parameters
 
 ### Reference
 
 - **[Troubleshooting](docs/troubleshooting.md)** — Common issues & solutions
 - **[Agent Skill](skills/popcorn-video-analysis/SKILL.md)** — Instructions for AI agents
-- **[API Reference](#-mcp-tools)** — Tool schemas & responses
+- **[API Reference](#mcp-tools)** — Tool schemas & responses
 
 ---
 
-## 🔍 How It Works
+## How It Works
 
 **Core Components:**
 
@@ -145,7 +145,7 @@ Video File ──▶ FFprobe ──▶ FFmpeg ──▶ Whisper ──▶ Analys
 
 ---
 
-## 🔧 MCP Tools
+## MCP Tools
 
 | Tool | Description |
 |------|-------------|
@@ -181,7 +181,7 @@ Video File ──▶ FFprobe ──▶ FFmpeg ──▶ Whisper ──▶ Analys
 
 ---
 
-## 🎬 Video Types
+## Video Types
 
 | Type | Best For | Scene Detection |
 |------|----------|-----------------|
@@ -192,7 +192,7 @@ Video File ──▶ FFprobe ──▶ FFmpeg ──▶ Whisper ──▶ Analys
 | `surveillance` | Security footage, dashcam | High threshold |
 | `sports` | Live events, fast action | High frame rate |
 
-## 🎯 Objectives
+## Objectives
 
 | Objective | Use When |
 |-----------|----------|
@@ -205,7 +205,7 @@ Video File ──▶ FFprobe ──▶ FFmpeg ──▶ Whisper ──▶ Analys
 
 ---
 
-## 🎤 Transcription Backends
+## Transcription Backends
 
 Popcorn auto-detects your system and recommends the best backend.
 
@@ -213,10 +213,10 @@ Popcorn auto-detects your system and recommends the best backend.
 
 | Backend | Speed | Best For | Install |
 |---------|-------|----------|---------|
-| **mlx-whisper** | ⚡⚡⚡⚡ | Apple Silicon (M1/M2/M3/M4) | `pip install mlx-whisper` |
-| **faster-whisper** | ⚡⚡⚡⚡ | NVIDIA GPUs | `pip install faster-whisper` |
-| **whisper-cpp** | ⚡⚡⚡ | Cross-platform | `brew install whisper-cpp` |
-| **whisper** | ⚡⚡ | Most compatible | `pip install openai-whisper` |
+| **mlx-whisper** | Fastest | Apple Silicon (M1/M2/M3/M4) | `pip install mlx-whisper` |
+| **faster-whisper** | Fast | NVIDIA GPUs | `pip install faster-whisper` |
+| **whisper-cpp** | Moderate | Cross-platform | `brew install whisper-cpp` |
+| **whisper** | Slow | Most compatible | `pip install openai-whisper` |
 
 ### Processing Times (60-min video)
 
@@ -241,7 +241,7 @@ Popcorn auto-detects your system and recommends the best backend.
 
 ---
 
-## 📋 Configuration
+## Configuration
 
 ### All Parameters
 
@@ -276,7 +276,7 @@ Popcorn auto-detects your system and recommends the best backend.
 
 ---
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### FFmpeg not found
 
@@ -308,7 +308,7 @@ See **[Troubleshooting Guide](docs/troubleshooting.md)** for more solutions.
 
 ---
 
-## 🛠️ Development
+## Development
 
 ```bash
 npm install          # Install dependencies
@@ -334,7 +334,7 @@ popcorn/
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing`)
@@ -344,13 +344,13 @@ popcorn/
 
 ---
 
-## 📄 License
+## License
 
 MIT License — see [LICENSE](LICENSE) for details.
 
 ---
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - [OpenAI Whisper](https://github.com/openai/whisper) — Speech recognition
 - [whisper.cpp](https://github.com/ggerganov/whisper.cpp) — C++ port
