@@ -28,7 +28,7 @@
   <a href="docs/i18n/README.hi.md">🇮🇳 हिन्दी</a>
 </p>
 
-<h4 align="center">Video analysis system built for <a href="https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/overview" target="_blank">Claude Code</a>.</h4>
+<h4 align="center">An agent skill that gives any coding agent the ability to watch and understand video. Works with <a href="https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/overview" target="_blank">Claude Code</a>, <a href="https://openai.com/index/introducing-codex/" target="_blank">Codex</a>, and any MCP-compatible agent.</h4>
 
 <p align="center">
   <a href="LICENSE">
@@ -125,7 +125,7 @@ Add to Claude Desktop config (`~/Library/Application Support/Claude/claude_deskt
 
 ---
 
-## ⚙️ How It Works
+## 🔍 How It Works
 
 **Core Components:**
 
@@ -241,7 +241,7 @@ Popcorn auto-detects your system and recommends the best backend.
 
 ---
 
-## 🎛️ Configuration
+## 📋 Configuration
 
 ### All Parameters
 
