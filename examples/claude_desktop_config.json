@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "popcorn": {
+      "command": "node",
+      "args": ["/absolute/path/to/popcorn/dist/index.js"]
+    }
+  }
+}
