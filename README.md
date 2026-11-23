@@ -323,6 +323,7 @@ git clone https://github.com/haithamelmengad/popcorn.git
 cd popcorn
 npm install          # Install dependencies
 npm run build        # Build
+npm test             # Smoke test (needs ffmpeg)
 npm run dev          # Development mode
 npm start            # Run server
 ```
