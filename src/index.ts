@@ -3,7 +3,9 @@ import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import {
   CallToolRequestSchema,
+  ErrorCode,
   ListToolsRequestSchema,
+  McpError,
 } from "@modelcontextprotocol/sdk/types.js";
 import { z } from "zod";
 import { analyzeVideo } from "./analyze.js";
@@ -169,10 +171,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
   ],
 }));
 
-server.setRequestHandler(CallToolRequestSchema, async (request) => {
-  const tool = request.params.name;
-  const args = request.params.arguments ?? {};
-
+async function callTool(tool: string, args: Record<string, unknown>) {
   switch (tool) {
     case "popcorn_suggest": {
       const input = SuggestInput.parse(args);
@@ -455,7 +454,19 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
     }
 
     default:
-      throw new Error(`Unknown tool: ${tool}`);
+      throw new McpError(ErrorCode.InvalidParams, `Unknown tool: ${tool}`);
+  }
+}
+
+server.setRequestHandler(CallToolRequestSchema, async (request) => {
+  try {
+    return await callTool(request.params.name, request.params.arguments ?? {});
+  } catch (error) {
+    // An unknown tool is a protocol error. Any other failure goes back as a tool
+    // result with isError, so the model can read the message and try again.
+    if (error instanceof McpError) throw error;
+    const text = error instanceof Error ? error.message : String(error);
+    return { content: [{ type: "text" as const, text }], isError: true };
   }
 });
 
