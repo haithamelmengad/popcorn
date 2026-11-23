@@ -18,7 +18,7 @@
     <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License">
   </a>
   <a href="../../package.json">
-    <img src="https://img.shields.io/badge/version-0.5.0-green.svg" alt="Version">
+    <img src="https://img.shields.io/badge/version-0.5.1-green.svg" alt="Version">
   </a>
   <a href="https://modelcontextprotocol.io">
     <img src="https://img.shields.io/badge/MCP-Compatible-purple.svg" alt="MCP Compatible">
@@ -39,8 +39,8 @@ brew install ffmpeg                    # macOS
 sudo apt install ffmpeg                # Ubuntu/Debian
 
 # Popcorn 설치
-git clone https://github.com/haithamelmengad/popcorn.git
-cd popcorn && npm install && npm run build
+git clone https://github.com/haithamelmengad/claude-popcorn.git
+cd claude-popcorn && npm install && npm run build
 
 # 선택사항: 음성 인식 백엔드 설치
 pip install mlx-whisper                # Apple Silicon (가장 빠름)

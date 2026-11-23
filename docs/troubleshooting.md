@@ -172,7 +172,7 @@ Check `~/Library/Application Support/Claude/claude_desktop_config.json`:
   "mcpServers": {
     "popcorn": {
       "command": "node",
-      "args": ["/absolute/path/to/popcorn/dist/index.js"]
+      "args": ["/absolute/path/to/claude-popcorn/dist/index.js"]
     }
   }
 }
@@ -182,7 +182,7 @@ The path must be absolute, not relative.
 
 ## Still Having Issues?
 
-1. Check the GitHub issues: [github.com/haithamelmengad/popcorn/issues](https://github.com/haithamelmengad/popcorn/issues)
+1. Check the GitHub issues: [github.com/haithamelmengad/claude-popcorn/issues](https://github.com/haithamelmengad/claude-popcorn/issues)
 2. Run with debug output: Check console for error messages
 3. Open an issue with:
    - Your OS and Node.js version
