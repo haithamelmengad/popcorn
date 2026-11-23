@@ -1,6 +1,7 @@
+import os from "node:os";
 import path from "node:path";
 import fs from "node:fs/promises";
-import { extractAudio, extractFrames, extractSceneFrames, frameToBase64, probeVideo, FrameResult } from "./ffmpeg.js";
+import { extractAudio, extractFrames, extractSceneFrames, frameToBase64, probeVideo, sampleEvenly, FrameResult } from "./ffmpeg.js";
 import { transcribe, TranscriptionBackend } from "./transcribe.js";
 
 export type AnalyzeOptions = {
@@ -63,41 +64,33 @@ function safeName(name: string): string {
   return name.replace(/[^a-zA-Z0-9._-]/g, "_");
 }
 
-/**
- * Select representative frames to include inline.
- * Tries to pick frames evenly distributed across the video.
- */
-function selectRepresentativeFrames(
-  frames: { path: string; timeSec: number }[],
-  count: number
-): { path: string; timeSec: number }[] {
-  if (frames.length <= count) return frames;
-
-  const selected: { path: string; timeSec: number }[] = [];
-  const step = (frames.length - 1) / (count - 1);
-
-  for (let i = 0; i < count; i++) {
-    const index = Math.round(i * step);
-    selected.push(frames[index]);
-  }
-
-  return selected;
-}
-
 export async function analyzeVideo(
   videoPath: string,
   options: AnalyzeOptions
 ): Promise<AnalyzeResult> {
+  // A real file path only: this stops URLs and names that start with a dash
+  // from reaching ffmpeg as protocols or options.
+  videoPath = path.resolve(videoPath);
+
   const warnings: string[] = [];
   const baseName = safeName(path.basename(videoPath, path.extname(videoPath)));
   const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
-  const outDir = options.outDir
+  const dirName = `${baseName}_${timestamp}`;
+  let outDir = options.outDir
     ? path.resolve(options.outDir)
-    : path.resolve(process.cwd(), ".popcorn", `${baseName}_${timestamp}`);
+    : path.resolve(process.cwd(), ".popcorn", dirName);
 
-  await fs.mkdir(outDir, { recursive: true });
-
+  // Probe first so a bad path does not leave an empty output folder behind.
   const video = await probeVideo(videoPath);
+
+  try {
+    await fs.mkdir(outDir, { recursive: true });
+  } catch (error) {
+    if (options.outDir) throw error;
+    // Some clients start the server in a folder it cannot write to, such as "/".
+    outDir = path.join(os.homedir(), ".popcorn", dirName);
+    await fs.mkdir(outDir, { recursive: true });
+  }
 
   let transcriptResult: {
     available: boolean;
@@ -130,7 +123,12 @@ export async function analyzeVideo(
       });
 
       if (!transcriptResult.available) {
-        warnings.push("No transcription backend available; skipping transcription. Run 'popcorn_backends' to see installation options.");
+        const backend = options.backend ?? "auto";
+        warnings.push(
+          backend === "auto"
+            ? "No transcription backend available; skipping transcription. Run 'popcorn_backends' to see installation options."
+            : `Transcription backend '${backend}' is not available; skipping transcription. Run 'popcorn_backends' to see what is installed.`
+        );
       }
     } catch (error) {
       warnings.push(`Transcription failed: ${(error as Error).message}`);
@@ -155,8 +153,12 @@ export async function analyzeVideo(
         videoPath,
         framesDir,
         options.framesPerMin,
-        options.maxFrames
+        options.maxFrames,
+        video.durationSec
       );
+    }
+    if (frameInfo.count === 0) {
+      warnings.push("No frames were extracted. The file may have no video stream.");
     }
   } catch (error) {
     warnings.push(`Frame extraction failed: ${(error as Error).message}`);
@@ -165,7 +167,7 @@ export async function analyzeVideo(
   // Generate inline base64 frames if requested
   let inlineFrames: InlineFrame[] | undefined;
   if (options.inlineFrames > 0 && frameInfo && frameInfo.frames.length > 0) {
-    const selectedFrames = selectRepresentativeFrames(frameInfo.frames, options.inlineFrames);
+    const selectedFrames = sampleEvenly(frameInfo.frames, options.inlineFrames);
     inlineFrames = [];
 
     for (const frame of selectedFrames) {

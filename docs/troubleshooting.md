@@ -45,14 +45,13 @@ pip install mlx-whisper
 # Any platform (most compatible)
 pip install openai-whisper
 
-# macOS (fast C++ version)
+# macOS (fast C++ version). Also needs a model file:
+# set WHISPER_CPP_MODEL to the path of a ggml model.
 brew install whisper-cpp
 
 # NVIDIA GPU (fastest on GPU)
 pip install faster-whisper
 ```
-
-On macOS 13+, the `macos-native` backend works without any install (uses built-in speech recognition).
 
 Use `popcorn_backends` tool to see what's available on your system.
 
@@ -124,7 +123,7 @@ For long videos, transcripts can be huge. Options:
 
 ### Inline images not appearing
 
-Check that `inlineFrames` > 0 (default is 10-15 depending on preset).
+Check that `inlineFrames` > 0 (default is 5 to 30 depending on the objective, 10 when no objective is set).
 
 Some MCP clients may not render inline images. The images are also saved to disk in the `assets/frames/` directory.
 
@@ -155,9 +154,7 @@ Ensure:
 
 ### Can't write output
 
-The output directory defaults to `.popcorn/` in the current working directory. Either:
-1. Ensure write permissions in current directory
-2. Specify a custom output: `"outDir": "/path/to/output"`
+The output directory defaults to `.popcorn/` in the current working directory. If that folder cannot be created, Popcorn writes to `~/.popcorn/`. To choose the folder yourself, set `"outDir": "/path/to/output"`.
 
 ## MCP Integration
 
@@ -185,7 +182,7 @@ The path must be absolute, not relative.
 
 ## Still Having Issues?
 
-1. Check the GitHub issues: [github.com/anthropics/popcorn/issues](https://github.com/anthropics/popcorn/issues)
+1. Check the GitHub issues: [github.com/haithamelmengad/popcorn/issues](https://github.com/haithamelmengad/popcorn/issues)
 2. Run with debug output: Check console for error messages
 3. Open an issue with:
    - Your OS and Node.js version

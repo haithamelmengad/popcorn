@@ -4,7 +4,7 @@ This tutorial shows how to analyze videos with AI agents using Popcorn.
 
 ## Prerequisites
 
-1. **Node.js 18+**
+1. **Node.js 20+**
 2. **FFmpeg** - Install via Homebrew, apt, or [official builds](https://ffmpeg.org/download.html)
    ```bash
    # macOS
@@ -21,7 +21,8 @@ This tutorial shows how to analyze videos with AI agents using Popcorn.
    # Any platform (most compatible)
    pip install openai-whisper
 
-   # macOS/Linux (fast C++ version)
+   # macOS/Linux (fast C++ version). Also needs a model file:
+   # set WHISPER_CPP_MODEL to the path of a ggml model.
    brew install whisper-cpp
 
    # NVIDIA GPU (fastest with GPU)
@@ -31,7 +32,7 @@ This tutorial shows how to analyze videos with AI agents using Popcorn.
 ## Setup
 
 ```bash
-git clone https://github.com/anthropics/popcorn.git
+git clone https://github.com/haithamelmengad/popcorn.git
 cd popcorn
 npm install
 npm run build
@@ -59,7 +60,6 @@ From your agent, call:
 ```
 
 Popcorn automatically:
-- Detects the video type
 - Extracts frames at scene changes
 - Transcribes audio (if whisper is installed)
 - Returns inline images + metadata
@@ -148,7 +148,7 @@ For long videos, read transcript slices:
   },
   "video": {
     "durationSec": 3600,
-    "resolution": "1920x1080"
+    "video": { "width": 1920, "height": 1080 }
   },
   "transcript": {
     "available": true,
@@ -161,11 +161,11 @@ For long videos, read transcript slices:
     "frames": [...]
   },
   "inlineFrames": {
-    "count": 20,
+    "count": 30,
     "note": "Images included below"
   }
 }
-// Followed by 20 inline images as MCP image content blocks
+// Followed by 30 inline images as MCP image content blocks
 ```
 
 ### Output Files
@@ -253,11 +253,11 @@ Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
 import { analyzeVideo } from "./dist/analyze.js";
 
 const result = await analyzeVideo("/path/to/video.mp4", {
-  videoType: "screencast",
-  objective: "detailed",
   transcribe: true,
   frameMode: "scene",
+  framesPerMin: 6,
   sceneThreshold: 0.2,
+  minSceneInterval: 2,
   maxFrames: 200,
   inlineFrames: 20,
   maxChunkChars: 2000,

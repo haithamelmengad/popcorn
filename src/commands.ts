@@ -35,7 +35,8 @@ export async function runCommand(
     });
 
     child.on("close", (code) => {
-      resolve({ stdout, stderr, exitCode: code ?? 0 });
+      // code is null when the process was killed by a signal: that is a failure.
+      resolve({ stdout, stderr, exitCode: code ?? 1 });
     });
   });
 }

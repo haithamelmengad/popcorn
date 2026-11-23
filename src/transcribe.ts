@@ -146,9 +146,26 @@ export async function detectEnvironment(): Promise<EnvironmentInfo> {
 }
 
 /**
+ * whisper.cpp needs its binary and a model file.
+ * Homebrew installs the binary as whisper-cli. Older builds call it whisper-cpp.
+ * The model is `model` when that is a file, else the WHISPER_CPP_MODEL env var.
+ */
+async function findWhisperCpp(model?: string): Promise<{ command?: string; modelPath?: string }> {
+  const command = (await commandExists("whisper-cli"))
+    ? "whisper-cli"
+    : (await commandExists("whisper-cpp")) ? "whisper-cpp" : undefined;
+  const isFile = async (file?: string) =>
+    !!file && (await fs.stat(file).then((stat) => stat.isFile(), () => false));
+  const modelPath = (await isFile(model))
+    ? model
+    : (await isFile(process.env.WHISPER_CPP_MODEL)) ? process.env.WHISPER_CPP_MODEL : undefined;
+  return { command, modelPath };
+}
+
+/**
  * Check which transcription backends are available
  */
-export async function detectAvailableBackends(): Promise<BackendInfo[]> {
+export async function detectAvailableBackends(model?: string): Promise<BackendInfo[]> {
   const backends: BackendInfo[] = [
     {
       name: "whisper",
@@ -163,9 +180,9 @@ export async function detectAvailableBackends(): Promise<BackendInfo[]> {
     {
       name: "whisper-cpp",
       available: false,
-      command: "whisper-cpp",
+      command: "whisper-cli",
       description: "whisper.cpp - Fast C++ implementation",
-      installHint: "brew install whisper-cpp (macOS) or build from source",
+      installHint: "brew install whisper-cpp (macOS) or build from source, then set WHISPER_CPP_MODEL to a ggml model file",
       platforms: ["linux", "darwin", "win32"],
       speed: "fast",
       estimatedTimeFor60Min: "10-20 min on CPU",
@@ -195,6 +212,15 @@ export async function detectAvailableBackends(): Promise<BackendInfo[]> {
   // Check availability in parallel
   await Promise.all(
     backends.map(async (backend) => {
+      if (backend.name === "whisper-cpp") {
+        const { command, modelPath } = await findWhisperCpp(model);
+        backend.available = !!command && !!modelPath;
+        if (command && !modelPath) {
+          backend.installHint = "Installed, but no model file. Set WHISPER_CPP_MODEL to a ggml model file, or pass its path as model.";
+        }
+        return;
+      }
+
       // Check if command exists
       backend.available = await commandExists(backend.command);
 
@@ -218,8 +244,8 @@ export async function detectAvailableBackends(): Promise<BackendInfo[]> {
 /**
  * Get the best available backend
  */
-export async function getBestBackend(): Promise<TranscriptionBackend | null> {
-  const backends = await detectAvailableBackends();
+export async function getBestBackend(model?: string): Promise<TranscriptionBackend | null> {
+  const backends = await detectAvailableBackends(model);
 
   // Priority order: mlx-whisper > faster-whisper > whisper-cpp > whisper
   const priority: TranscriptionBackend[] = [
@@ -325,6 +351,7 @@ async function transcribeWithOpenAIWhisper(
   const baseName = path.basename(audioPath, path.extname(audioPath));
   const outputJsonPath = path.join(outDir, `${baseName}.json`);
   const jsonRaw = await fs.readFile(outputJsonPath, "utf8");
+  await fs.rm(outputJsonPath); // its content is kept in transcript.json
   const json = JSON.parse(jsonRaw);
 
   const segments: TranscriptSegment[] = Array.isArray(json.segments)
@@ -363,9 +390,14 @@ async function transcribeWithWhisperCpp(
   // whisper.cpp outputs JSON with --output-json flag
   const outputBase = path.join(outDir, "transcript");
 
+  const { command, modelPath } = await findWhisperCpp(options.model);
+  if (!command || !modelPath) {
+    throw new Error("whisper.cpp binary or model file not found");
+  }
+
   const args = [
     "-f", audioPath,
-    "-m", options.model ?? "base",
+    "-m", modelPath,
     "--output-json",
     "-of", outputBase,
   ];
@@ -374,7 +406,7 @@ async function transcribeWithWhisperCpp(
     args.push("-l", options.language);
   }
 
-  const result = await runCommand("whisper-cpp", args);
+  const result = await runCommand(command, args);
   if (result.exitCode !== 0) {
     throw new Error(`whisper-cpp failed: ${result.stderr || result.stdout}`);
   }
@@ -387,8 +419,9 @@ async function transcribeWithWhisperCpp(
   // whisper.cpp format is slightly different
   const segments: TranscriptSegment[] = Array.isArray(json.transcription)
     ? json.transcription.map((segment: any) => ({
-        start: Number(segment.timestamps?.from?.replace(":", ".") ?? segment.offsets?.from ?? 0) / 1000,
-        end: Number(segment.timestamps?.to?.replace(":", ".") ?? segment.offsets?.to ?? 0) / 1000,
+        // offsets are milliseconds. timestamps are "HH:MM:SS,mmm" strings.
+        start: Number(segment.offsets?.from ?? 0) / 1000,
+        end: Number(segment.offsets?.to ?? 0) / 1000,
         text: String(segment.text ?? "").trim(),
       }))
     : [];
@@ -400,8 +433,8 @@ async function transcribeWithWhisperCpp(
     backend: "whisper-cpp",
     text: files.text,
     segments,
-    language: options.language,
-    model: options.model ?? "base",
+    language: json.result?.language ?? options.language,
+    model: modelPath,
     jsonPath: files.jsonPath,
     textPath: files.textPath,
     chunksPath: files.chunksPath,
@@ -424,23 +457,30 @@ async function transcribeWithMLXWhisper(
   const pythonScript = `
 import mlx_whisper
 import json
+import sys
+
+audio_path, output_path, model, language = sys.argv[1:5]
 
 result = mlx_whisper.transcribe(
-    "${audioPath}",
-    path_or_hf_repo="mlx-community/whisper-${options.model ?? "base"}-mlx",
-    ${options.language ? `language="${options.language}",` : ""}
+    audio_path,
+    path_or_hf_repo="mlx-community/whisper-" + model + "-mlx",
+    language=language or None,
 )
 
-with open("${outputPath}", "w") as f:
+with open(output_path, "w") as f:
     json.dump(result, f)
 `;
 
-  const result = await runCommand("python3", ["-c", pythonScript]);
+  // Values go in as argv, never into the Python source: they come from the LLM.
+  const result = await runCommand("python3", [
+    "-c", pythonScript, audioPath, outputPath, options.model ?? "base", options.language ?? "",
+  ]);
   if (result.exitCode !== 0) {
     throw new Error(`mlx-whisper failed: ${result.stderr || result.stdout}`);
   }
 
   const jsonRaw = await fs.readFile(outputPath, "utf8");
+  await fs.rm(outputPath); // its content is kept in transcript.json
   const json = JSON.parse(jsonRaw);
 
   const segments: TranscriptSegment[] = Array.isArray(json.segments)
@@ -481,11 +521,14 @@ async function transcribeWithFasterWhisper(
   const pythonScript = `
 from faster_whisper import WhisperModel
 import json
+import sys
 
-model = WhisperModel("${options.model ?? "base"}", device="auto", compute_type="auto")
+audio_path, output_path, model_name, language = sys.argv[1:5]
+
+model = WhisperModel(model_name, device="auto", compute_type="auto")
 segments, info = model.transcribe(
-    "${audioPath}",
-    ${options.language ? `language="${options.language}",` : ""}
+    audio_path,
+    language=language or None,
     beam_size=5
 )
 
@@ -497,16 +540,19 @@ result = {
     ]
 }
 
-with open("${outputPath}", "w") as f:
+with open(output_path, "w") as f:
     json.dump(result, f)
 `;
 
-  const result = await runCommand("python3", ["-c", pythonScript]);
+  const result = await runCommand("python3", [
+    "-c", pythonScript, audioPath, outputPath, options.model ?? "base", options.language ?? "",
+  ]);
   if (result.exitCode !== 0) {
     throw new Error(`faster-whisper failed: ${result.stderr || result.stdout}`);
   }
 
   const jsonRaw = await fs.readFile(outputPath, "utf8");
+  await fs.rm(outputPath); // its content is kept in transcript.json
   const json = JSON.parse(jsonRaw);
 
   const segments: TranscriptSegment[] = Array.isArray(json.segments)
@@ -549,7 +595,7 @@ export async function transcribe(
 
   // Auto-detect best backend
   if (backend === "auto") {
-    const detected = await getBestBackend();
+    const detected = await getBestBackend(options.model);
     if (!detected) {
       return {
         available: false,
@@ -558,17 +604,17 @@ export async function transcribe(
       };
     }
     backend = detected;
-  }
-
-  // Verify selected backend is available
-  const backends = await detectAvailableBackends();
-  const selected = backends.find(b => b.name === backend);
-  if (!selected?.available) {
-    return {
-      available: false,
-      text: "",
-      segments: [],
-    };
+  } else {
+    // Verify selected backend is available (auto mode already did this above)
+    const backends = await detectAvailableBackends(options.model);
+    const selected = backends.find(b => b.name === backend);
+    if (!selected?.available) {
+      return {
+        available: false,
+        text: "",
+        segments: [],
+      };
+    }
   }
 
   // Route to appropriate backend
@@ -593,6 +639,3 @@ export async function transcribe(
       };
   }
 }
-
-// Keep backwards compatibility
-export const transcribeWithWhisper = transcribe;

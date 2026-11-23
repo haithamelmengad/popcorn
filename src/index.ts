@@ -1,8 +1,11 @@
+#!/usr/bin/env node
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import {
   CallToolRequestSchema,
+  ErrorCode,
   ListToolsRequestSchema,
+  McpError,
 } from "@modelcontextprotocol/sdk/types.js";
 import { z } from "zod";
 import { analyzeVideo } from "./analyze.js";
@@ -62,7 +65,7 @@ const SuggestInput = z.object({
 const server = new Server(
   {
     name: "popcorn",
-    version: "0.4.0",
+    version: "0.5.0",
   },
   {
     capabilities: {
@@ -122,7 +125,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
             description: "Transcription backend. 'auto' picks the best available. Options: whisper (OpenAI, most compatible), whisper-cpp (fast C++), mlx-whisper (Apple Silicon optimized), faster-whisper (GPU accelerated).",
           },
           language: { type: "string", description: "Transcription language code (e.g., 'en')." },
-          model: { type: "string", description: "Whisper model: tiny, base, small, medium, large." },
+          model: { type: "string", description: "Whisper model: tiny, base, small, medium, large. For whisper-cpp: path to a ggml model file." },
           frameMode: {
             type: "string",
             enum: ["interval", "scene"],
@@ -142,7 +145,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
     {
       name: "popcorn_read",
       description:
-        "Read a file from an analysis bundle with optional line slicing or transcript time filtering.",
+        "Read a .json or .txt file from an analysis bundle with optional line slicing or transcript time filtering.",
       inputSchema: {
         type: "object",
         properties: {
@@ -168,14 +171,12 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
   ],
 }));
 
-server.setRequestHandler(CallToolRequestSchema, async (request) => {
-  const tool = request.params.name;
-  const args = request.params.arguments ?? {};
-
+async function callTool(tool: string, args: Record<string, unknown>) {
   switch (tool) {
     case "popcorn_suggest": {
       const input = SuggestInput.parse(args);
-      const videoInfo = await probeVideo(input.path);
+      // Same rule as analyzeVideo: a real file path only, no URLs or options.
+      const videoInfo = await probeVideo(path.resolve(input.path));
       const filename = path.basename(input.path);
 
       // Suggest video type based on metadata
@@ -202,7 +203,11 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
           path: input.path,
           filename,
           durationSec: videoInfo.durationSec,
-          durationFormatted: durationMin ? `${durationMin} minutes` : "unknown",
+          durationFormatted: !videoInfo.durationSec
+            ? "unknown"
+            : videoInfo.durationSec < 60
+              ? `${Math.round(videoInfo.durationSec)} seconds`
+              : `${durationMin} minutes`,
           resolution: videoInfo.video?.width && videoInfo.video?.height
             ? `${videoInfo.video.width}x${videoInfo.video.height}`
             : "unknown",
@@ -453,7 +458,19 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
     }
 
     default:
-      throw new Error(`Unknown tool: ${tool}`);
+      throw new McpError(ErrorCode.InvalidParams, `Unknown tool: ${tool}`);
+  }
+}
+
+server.setRequestHandler(CallToolRequestSchema, async (request) => {
+  try {
+    return await callTool(request.params.name, request.params.arguments ?? {});
+  } catch (error) {
+    // An unknown tool is a protocol error. Any other failure goes back as a tool
+    // result with isError, so the model can read the message and try again.
+    if (error instanceof McpError) throw error;
+    const text = error instanceof Error ? error.message : String(error);
+    return { content: [{ type: "text" as const, text }], isError: true };
   }
 });
 

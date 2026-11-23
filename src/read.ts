@@ -26,6 +26,14 @@ function clampText(content: string, maxChars?: number): string {
 export async function readFileSlice(options: ReadOptions): Promise<{ content: string; truncated: boolean }> {
   const ext = path.extname(options.path).toLowerCase();
 
+  // Bundles hold .json and .txt files only. Nothing else is read.
+  if (ext !== ".json" && ext !== ".txt") {
+    throw new Error(`popcorn_read only reads .json and .txt files from an analysis bundle: ${options.path}`);
+  }
+  if (!(await fs.stat(options.path)).isFile()) {
+    throw new Error(`Not a regular file: ${options.path}`);
+  }
+
   if (ext === ".json" && (options.startSec !== undefined || options.endSec !== undefined)) {
     const raw = await fs.readFile(options.path, "utf8");
     const json = JSON.parse(raw);
@@ -37,7 +45,8 @@ export async function readFileSlice(options: ReadOptions): Promise<{ content: st
         const segEnd = Number(segment.end ?? 0);
         return segEnd >= start && segStart <= end;
       });
-      const filtered = { ...json, segments };
+      // Only the slice: the raw backend fields hold the full, unfiltered transcript.
+      const filtered = { language: json.language, segments };
       const content = JSON.stringify(filtered, null, 2);
       const trimmed = clampText(content, options.maxChars);
       return { content: trimmed, truncated: trimmed !== content };

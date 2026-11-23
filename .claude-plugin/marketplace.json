@@ -1,0 +1,14 @@
+{
+  "name": "popcorn",
+  "description": "Popcorn: video analysis for Claude Code.",
+  "owner": {
+    "name": "haithamelmengad"
+  },
+  "plugins": [
+    {
+      "name": "popcorn",
+      "source": "./",
+      "description": "Watch local video files. Popcorn extracts key frames at scene changes and a local Whisper transcript."
+    }
+  ]
+}

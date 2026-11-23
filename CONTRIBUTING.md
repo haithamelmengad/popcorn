@@ -7,6 +7,7 @@ Thanks for helping improve Popcorn!
 ```bash
 npm install
 npm run build
+npm test
 npm run dev
 ```
 

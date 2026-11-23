@@ -109,6 +109,27 @@ export type FrameResult = {
   frames: FrameInfo[];
 };
 
+// Frames go to the model inline, so keep them small: at most 1280 px wide, JPEG quality 4.
+const FRAME_SCALE = "scale='min(1280,iw)':-2";
+const FRAME_QUALITY = "4";
+
+/**
+ * Pick `count` items spread evenly over the list, first and last included.
+ */
+export function sampleEvenly<T>(items: T[], count: number): T[] {
+  if (items.length <= count) return items;
+  if (count === 1) return [items[Math.floor(items.length / 2)]];
+
+  const selected: T[] = [];
+  const step = (items.length - 1) / (count - 1);
+
+  for (let i = 0; i < count; i++) {
+    selected.push(items[Math.round(i * step)]);
+  }
+
+  return selected;
+}
+
 /**
  * Extract frames at fixed intervals (original method)
  */
@@ -116,10 +137,15 @@ export async function extractFrames(
   videoPath: string,
   outDir: string,
   framesPerMin: number,
-  maxFrames: number
+  maxFrames: number,
+  durationSec?: number
 ): Promise<FrameResult> {
   await fs.mkdir(outDir, { recursive: true });
-  const intervalSec = framesPerMin > 0 ? 60 / framesPerMin : 30;
+  let intervalSec = framesPerMin > 0 ? 60 / framesPerMin : 30;
+  // More frames than maxFrames allows: widen the interval so they cover the whole video.
+  if (durationSec && durationSec / intervalSec > maxFrames) {
+    intervalSec = durationSec / maxFrames;
+  }
   const fps = 1 / intervalSec;
 
   const framePattern = path.join(outDir, "frame_%06d.jpg");
@@ -128,11 +154,11 @@ export async function extractFrames(
     "-i",
     videoPath,
     "-vf",
-    `fps=${fps}`,
+    `fps=${fps},${FRAME_SCALE}`,
     "-frames:v",
     String(maxFrames),
     "-q:v",
-    "2",
+    FRAME_QUALITY,
     framePattern,
   ];
   const result = await runCommand("ffmpeg", args);
@@ -181,8 +207,6 @@ export async function extractSceneFrames(
     videoPath,
     "-vf",
     `select='gt(scene,${sceneThreshold})',showinfo`,
-    "-vsync",
-    "vfr",
     "-f",
     "null",
     "-",
@@ -193,22 +217,24 @@ export async function extractSceneFrames(
 
   // Parse showinfo output to get timestamps
   const timestampRegex = /pts_time:\s*([\d.]+)/g;
-  const timestamps: number[] = [];
+  let timestamps: number[] = [];
   let match;
   while ((match = timestampRegex.exec(output)) !== null) {
     const time = parseFloat(match[1]);
     if (timestamps.length === 0 || time - timestamps[timestamps.length - 1] >= minIntervalSec) {
       timestamps.push(time);
     }
-    if (timestamps.length >= maxFrames) break;
   }
+  // Too many scene changes: keep an even spread so the frames cover the whole video.
+  timestamps = sampleEvenly(timestamps, maxFrames);
 
   // If scene detection found nothing, fall back to evenly spaced frames
   if (timestamps.length === 0) {
     const probe = await probeVideo(videoPath);
     const duration = probe.durationSec ?? 60;
-    const interval = duration / 11;
-    for (let i = 1; i <= 10; i++) {
+    const count = Math.min(10, maxFrames);
+    const interval = duration / (count + 1);
+    for (let i = 1; i <= count; i++) {
       timestamps.push(Number((interval * i).toFixed(2)));
     }
   }
@@ -229,8 +255,9 @@ export async function extractSceneFrames(
         "-y",
         "-ss", String(time),
         "-i", videoPath,
+        "-vf", FRAME_SCALE,
         "-vframes", "1",
-        "-q:v", "2",
+        "-q:v", FRAME_QUALITY,
         framePath,
       ];
 

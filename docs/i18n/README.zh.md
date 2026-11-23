@@ -18,7 +18,7 @@
     <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License">
   </a>
   <a href="../../package.json">
-    <img src="https://img.shields.io/badge/version-0.4.0-green.svg" alt="Version">
+    <img src="https://img.shields.io/badge/version-0.5.0-green.svg" alt="Version">
   </a>
   <a href="https://modelcontextprotocol.io">
     <img src="https://img.shields.io/badge/MCP-Compatible-purple.svg" alt="MCP Compatible">
@@ -39,7 +39,7 @@ brew install ffmpeg                    # macOS
 sudo apt install ffmpeg                # Ubuntu/Debian
 
 # 安装 Popcorn
-git clone https://github.com/anthropics/popcorn.git
+git clone https://github.com/haithamelmengad/popcorn.git
 cd popcorn && npm install && npm run build
 
 # 可选：安装转录后端
