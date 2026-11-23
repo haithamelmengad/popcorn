@@ -225,6 +225,11 @@ export async function extractSceneFrames(
       timestamps.push(time);
     }
   }
+  // Scene detection only reports changes, so the opening scene has no timestamp.
+  // Add one inside it: up to 1 s in, to skip a black first frame or a fade in.
+  if (timestamps.length > 0) {
+    timestamps.unshift(Math.min(1, timestamps[0] / 2));
+  }
   // Too many scene changes: keep an even spread so the frames cover the whole video.
   timestamps = sampleEvenly(timestamps, maxFrames);
 

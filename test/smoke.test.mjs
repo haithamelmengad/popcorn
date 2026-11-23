@@ -45,6 +45,22 @@ test("server lists its tools and analyzes a tiny video", async () => {
     assert.equal(result.content.filter((item) => item.type === "image").length, 1);
     assert.ok(existsSync(analysis.analysisPath));
 
+    // Scene mode keeps a frame from the opening scene, before the first cut at 2 s.
+    const cut = path.join(dir, "cut.mp4");
+    execFileSync("ffmpeg", [
+      "-v", "error", "-y",
+      "-f", "lavfi", "-i", "color=red:size=320x240:duration=2:rate=10",
+      "-f", "lavfi", "-i", "color=blue:size=320x240:duration=2:rate=10",
+      "-filter_complex", "concat=n=2", "-pix_fmt", "yuv420p",
+      cut,
+    ]);
+    const scenes = await client.callTool({
+      name: "popcorn_analyze",
+      arguments: { path: cut, transcribe: false, inlineFrames: 0 },
+    });
+    const times = JSON.parse(scenes.content[0].text).keyframes.frames.map((frame) => frame.timeSec);
+    assert.deepEqual(times, [1, 2]);
+
     const read = await client.callTool({ name: "popcorn_read", arguments: { path: analysis.analysisPath } });
     assert.ok(!read.isError);
 
