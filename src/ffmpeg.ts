@@ -109,6 +109,10 @@ export type FrameResult = {
   frames: FrameInfo[];
 };
 
+// Frames go to the model inline, so keep them small: at most 1280 px wide, JPEG quality 4.
+const FRAME_SCALE = "scale='min(1280,iw)':-2";
+const FRAME_QUALITY = "4";
+
 /**
  * Pick `count` items spread evenly over the list, first and last included.
  */
@@ -150,11 +154,11 @@ export async function extractFrames(
     "-i",
     videoPath,
     "-vf",
-    `fps=${fps}`,
+    `fps=${fps},${FRAME_SCALE}`,
     "-frames:v",
     String(maxFrames),
     "-q:v",
-    "2",
+    FRAME_QUALITY,
     framePattern,
   ];
   const result = await runCommand("ffmpeg", args);
@@ -251,8 +255,9 @@ export async function extractSceneFrames(
         "-y",
         "-ss", String(time),
         "-i", videoPath,
+        "-vf", FRAME_SCALE,
         "-vframes", "1",
-        "-q:v", "2",
+        "-q:v", FRAME_QUALITY,
         framePath,
       ];
 
