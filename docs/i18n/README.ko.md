@@ -15,7 +15,7 @@ Popcorn은 Claude Code와 다른 MCP 에이전트가 내 컴퓨터에 있는 동
 **Claude Code에 설치**
 
 ```bash
-claude mcp add popcorn -- npx -y github:haithamelmengad/claude-popcorn
+claude mcp add popcorn -- npx -y claude-popcorn
 ```
 
 **Claude Code 플러그인으로 설치할 수도 있습니다.** 이렇게 하면 `/popcorn:watch` 스킬도 추가됩니다. Claude Code 안에서 다음을 실행하세요.
@@ -39,7 +39,7 @@ claude mcp add popcorn -- npx -y github:haithamelmengad/claude-popcorn
 |--------|-------|
 | Claude Code | 위의 명령 또는 플러그인 |
 | Claude Desktop | `claude_desktop_config.json`에 서버를 추가합니다. [빠른 시작](#빠른-시작) 참고 |
-| Codex | `codex mcp add popcorn -- npx -y github:haithamelmengad/claude-popcorn` |
+| Codex | `codex mcp add popcorn -- npx -y claude-popcorn` |
 | Cursor | 같은 `mcpServers` 항목을 `~/.cursor/mcp.json`에 추가합니다 |
 
 **요구 사항**
@@ -90,7 +90,7 @@ pip install mlx-whisper                # Apple Silicon (fastest)
 pip install openai-whisper             # Any platform
 
 # Add Popcorn to Claude Code
-claude mcp add popcorn -- npx -y github:haithamelmengad/claude-popcorn
+claude mcp add popcorn -- npx -y claude-popcorn
 ```
 
 Claude Desktop에서는 `~/Library/Application Support/Claude/claude_desktop_config.json`에 다음을 추가하세요.
@@ -100,7 +100,7 @@ Claude Desktop에서는 `~/Library/Application Support/Claude/claude_desktop_con
   "mcpServers": {
     "popcorn": {
       "command": "npx",
-      "args": ["-y", "github:haithamelmengad/claude-popcorn"]
+      "args": ["-y", "claude-popcorn"]
     }
   }
 }

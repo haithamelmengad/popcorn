@@ -2,7 +2,7 @@
   "mcpServers": {
     "popcorn": {
       "command": "npx",
-      "args": ["-y", "github:haithamelmengad/claude-popcorn"]
+      "args": ["-y", "claude-popcorn"]
     }
   }
 }

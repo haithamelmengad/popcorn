@@ -15,7 +15,7 @@ Popcorn 让 Claude Code 和其他 MCP 智能体观看你电脑上的视频文件
 **为 Claude Code 安装**
 
 ```bash
-claude mcp add popcorn -- npx -y github:haithamelmengad/claude-popcorn
+claude mcp add popcorn -- npx -y claude-popcorn
 ```
 
 **也可以作为 Claude Code 插件安装。** 这样还会添加 `/popcorn:watch` 技能。在 Claude Code 中运行以下命令：
@@ -39,7 +39,7 @@ claude mcp add popcorn -- npx -y github:haithamelmengad/claude-popcorn
 |--------|-------|
 | Claude Code | 上面的命令或插件 |
 | Claude Desktop | 把服务器添加到 `claude_desktop_config.json`。见[快速开始](#快速开始) |
-| Codex | `codex mcp add popcorn -- npx -y github:haithamelmengad/claude-popcorn` |
+| Codex | `codex mcp add popcorn -- npx -y claude-popcorn` |
 | Cursor | 把同样的 `mcpServers` 条目添加到 `~/.cursor/mcp.json` |
 
 **环境要求**
@@ -90,7 +90,7 @@ pip install mlx-whisper                # Apple Silicon (fastest)
 pip install openai-whisper             # Any platform
 
 # Add Popcorn to Claude Code
-claude mcp add popcorn -- npx -y github:haithamelmengad/claude-popcorn
+claude mcp add popcorn -- npx -y claude-popcorn
 ```
 
 如果使用 Claude Desktop，把下面的内容添加到 `~/Library/Application Support/Claude/claude_desktop_config.json`：
@@ -100,7 +100,7 @@ claude mcp add popcorn -- npx -y github:haithamelmengad/claude-popcorn
   "mcpServers": {
     "popcorn": {
       "command": "npx",
-      "args": ["-y", "github:haithamelmengad/claude-popcorn"]
+      "args": ["-y", "claude-popcorn"]
     }
   }
 }

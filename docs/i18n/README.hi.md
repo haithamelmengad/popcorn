@@ -15,7 +15,7 @@ Popcorn की मदद से Claude Code और दूसरे MCP एजे
 **Claude Code के लिए इंस्टॉल करें**
 
 ```bash
-claude mcp add popcorn -- npx -y github:haithamelmengad/claude-popcorn
+claude mcp add popcorn -- npx -y claude-popcorn
 ```
 
 **या इसे Claude Code प्लगइन के रूप में इंस्टॉल करें।** इससे `/popcorn:watch` स्किल भी जुड़ जाती है। ये कमांड Claude Code के अंदर चलाएँ:
@@ -39,7 +39,7 @@ claude mcp add popcorn -- npx -y github:haithamelmengad/claude-popcorn
 |--------|-------|
 | Claude Code | ऊपर दी गई कमांड या प्लगइन |
 | Claude Desktop | सर्वर को `claude_desktop_config.json` में जोड़ें। [त्वरित शुरुआत](#त्वरित-शुरुआत) देखें |
-| Codex | `codex mcp add popcorn -- npx -y github:haithamelmengad/claude-popcorn` |
+| Codex | `codex mcp add popcorn -- npx -y claude-popcorn` |
 | Cursor | वही `mcpServers` एंट्री `~/.cursor/mcp.json` में जोड़ें |
 
 **ज़रूरतें**
@@ -90,7 +90,7 @@ pip install mlx-whisper                # Apple Silicon (fastest)
 pip install openai-whisper             # Any platform
 
 # Add Popcorn to Claude Code
-claude mcp add popcorn -- npx -y github:haithamelmengad/claude-popcorn
+claude mcp add popcorn -- npx -y claude-popcorn
 ```
 
 Claude Desktop के लिए, इसे `~/Library/Application Support/Claude/claude_desktop_config.json` में जोड़ें:
@@ -100,7 +100,7 @@ Claude Desktop के लिए, इसे `~/Library/Application Support/Claude
   "mcpServers": {
     "popcorn": {
       "command": "npx",
-      "args": ["-y", "github:haithamelmengad/claude-popcorn"]
+      "args": ["-y", "claude-popcorn"]
     }
   }
 }

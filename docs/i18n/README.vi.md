@@ -15,7 +15,7 @@ Nó trả về các khung hình chính tại những chỗ chuyển cảnh và m
 **Cài đặt cho Claude Code**
 
 ```bash
-claude mcp add popcorn -- npx -y github:haithamelmengad/claude-popcorn
+claude mcp add popcorn -- npx -y claude-popcorn
 ```
 
 **Hoặc cài đặt dưới dạng plugin của Claude Code.** Cách này cũng thêm skill `/popcorn:watch`. Chạy các lệnh sau bên trong Claude Code:
@@ -39,7 +39,7 @@ Hãy hỏi bằng lời lẽ thông thường và đưa đường dẫn đầy �
 |--------|-------|
 | Claude Code | Lệnh hoặc plugin ở trên |
 | Claude Desktop | Thêm server vào `claude_desktop_config.json`. Xem [Bắt đầu nhanh](#bắt-đầu-nhanh) |
-| Codex | `codex mcp add popcorn -- npx -y github:haithamelmengad/claude-popcorn` |
+| Codex | `codex mcp add popcorn -- npx -y claude-popcorn` |
 | Cursor | Thêm cùng mục `mcpServers` đó vào `~/.cursor/mcp.json` |
 
 **Yêu cầu**
@@ -90,7 +90,7 @@ pip install mlx-whisper                # Apple Silicon (fastest)
 pip install openai-whisper             # Any platform
 
 # Add Popcorn to Claude Code
-claude mcp add popcorn -- npx -y github:haithamelmengad/claude-popcorn
+claude mcp add popcorn -- npx -y claude-popcorn
 ```
 
 Với Claude Desktop, hãy thêm đoạn sau vào `~/Library/Application Support/Claude/claude_desktop_config.json`:
@@ -100,7 +100,7 @@ Với Claude Desktop, hãy thêm đoạn sau vào `~/Library/Application Support
   "mcpServers": {
     "popcorn": {
       "command": "npx",
-      "args": ["-y", "github:haithamelmengad/claude-popcorn"]
+      "args": ["-y", "claude-popcorn"]
     }
   }
 }

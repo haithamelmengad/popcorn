@@ -15,7 +15,7 @@ Sahne değişimlerinden anahtar kareler ve zaman damgalı bir transkript döndü
 **Claude Code için kurulum**
 
 ```bash
-claude mcp add popcorn -- npx -y github:haithamelmengad/claude-popcorn
+claude mcp add popcorn -- npx -y claude-popcorn
 ```
 
 **Ya da Claude Code eklentisi olarak kurun.** Bu yöntem `/popcorn:watch` becerisini de ekler. Şu komutları Claude Code içinde çalıştırın:
@@ -39,7 +39,7 @@ Sade bir dille sorun ve videonun tam yolunu verin:
 |---------|---------|
 | Claude Code | Yukarıdaki komut veya eklenti |
 | Claude Desktop | Sunucuyu `claude_desktop_config.json` dosyasına ekleyin. Bkz. [Hızlı Başlangıç](#hızlı-başlangıç) |
-| Codex | `codex mcp add popcorn -- npx -y github:haithamelmengad/claude-popcorn` |
+| Codex | `codex mcp add popcorn -- npx -y claude-popcorn` |
 | Cursor | Aynı `mcpServers` girdisini `~/.cursor/mcp.json` dosyasına ekleyin |
 
 **Gereksinimler**
@@ -90,7 +90,7 @@ pip install mlx-whisper                # Apple Silicon (fastest)
 pip install openai-whisper             # Any platform
 
 # Add Popcorn to Claude Code
-claude mcp add popcorn -- npx -y github:haithamelmengad/claude-popcorn
+claude mcp add popcorn -- npx -y claude-popcorn
 ```
 
 Claude Desktop için şunu `~/Library/Application Support/Claude/claude_desktop_config.json` dosyasına ekleyin:
@@ -100,7 +100,7 @@ Claude Desktop için şunu `~/Library/Application Support/Claude/claude_desktop_
   "mcpServers": {
     "popcorn": {
       "command": "npx",
-      "args": ["-y", "github:haithamelmengad/claude-popcorn"]
+      "args": ["-y", "claude-popcorn"]
     }
   }
 }

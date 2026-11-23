@@ -15,7 +15,7 @@ Popcorn を使うと、Claude Code などの MCP エージェントが手元の�
 **Claude Code にインストール**
 
 ```bash
-claude mcp add popcorn -- npx -y github:haithamelmengad/claude-popcorn
+claude mcp add popcorn -- npx -y claude-popcorn
 ```
 
 **Claude Code のプラグインとしてもインストールできます。** この場合は `/popcorn:watch` スキルも追加されます。Claude Code の中で次を実行します。
@@ -39,7 +39,7 @@ claude mcp add popcorn -- npx -y github:haithamelmengad/claude-popcorn
 |--------|-------|
 | Claude Code | 上のコマンドまたはプラグイン |
 | Claude Desktop | `claude_desktop_config.json` にサーバーを追加します。[クイックスタート](#クイックスタート)を参照 |
-| Codex | `codex mcp add popcorn -- npx -y github:haithamelmengad/claude-popcorn` |
+| Codex | `codex mcp add popcorn -- npx -y claude-popcorn` |
 | Cursor | 同じ `mcpServers` のエントリを `~/.cursor/mcp.json` に追加します |
 
 **必要なもの**
@@ -90,7 +90,7 @@ pip install mlx-whisper                # Apple Silicon (fastest)
 pip install openai-whisper             # Any platform
 
 # Add Popcorn to Claude Code
-claude mcp add popcorn -- npx -y github:haithamelmengad/claude-popcorn
+claude mcp add popcorn -- npx -y claude-popcorn
 ```
 
 Claude Desktop の場合は、`~/Library/Application Support/Claude/claude_desktop_config.json` に次を追加します。
@@ -100,7 +100,7 @@ Claude Desktop の場合は、`~/Library/Application Support/Claude/claude_deskt
   "mcpServers": {
     "popcorn": {
       "command": "npx",
-      "args": ["-y", "github:haithamelmengad/claude-popcorn"]
+      "args": ["-y", "claude-popcorn"]
     }
   }
 }

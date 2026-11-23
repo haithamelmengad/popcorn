@@ -15,7 +15,7 @@ Popcorn возвращает ключевые кадры в местах сме�
 **Установка для Claude Code**
 
 ```bash
-claude mcp add popcorn -- npx -y github:haithamelmengad/claude-popcorn
+claude mcp add popcorn -- npx -y claude-popcorn
 ```
 
 **Или установите Popcorn как плагин Claude Code.** Так вы получите ещё и навык `/popcorn:watch`. Выполните эти команды в Claude Code:
@@ -39,7 +39,7 @@ claude mcp add popcorn -- npx -y github:haithamelmengad/claude-popcorn
 |--------|-----------|
 | Claude Code | Команда или плагин выше |
 | Claude Desktop | Добавьте сервер в `claude_desktop_config.json`. См. [Быстрый старт](#быстрый-старт) |
-| Codex | `codex mcp add popcorn -- npx -y github:haithamelmengad/claude-popcorn` |
+| Codex | `codex mcp add popcorn -- npx -y claude-popcorn` |
 | Cursor | Добавьте такую же запись `mcpServers` в `~/.cursor/mcp.json` |
 
 **Требования**
@@ -90,7 +90,7 @@ pip install mlx-whisper                # Apple Silicon (fastest)
 pip install openai-whisper             # Any platform
 
 # Add Popcorn to Claude Code
-claude mcp add popcorn -- npx -y github:haithamelmengad/claude-popcorn
+claude mcp add popcorn -- npx -y claude-popcorn
 ```
 
 Для Claude Desktop добавьте это в `~/Library/Application Support/Claude/claude_desktop_config.json`:
@@ -100,7 +100,7 @@ claude mcp add popcorn -- npx -y github:haithamelmengad/claude-popcorn
   "mcpServers": {
     "popcorn": {
       "command": "npx",
-      "args": ["-y", "github:haithamelmengad/claude-popcorn"]
+      "args": ["-y", "claude-popcorn"]
     }
   }
 }
