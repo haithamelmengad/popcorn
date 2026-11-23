@@ -38,7 +38,7 @@
     <img src="https://img.shields.io/badge/version-0.4.0-green.svg" alt="Version">
   </a>
   <a href="package.json">
-    <img src="https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen.svg" alt="Node">
+    <img src="https://img.shields.io/badge/node-%3E%3D20-brightgreen.svg" alt="Node">
   </a>
   <a href="https://modelcontextprotocol.io">
     <img src="https://img.shields.io/badge/MCP-Compatible-purple.svg" alt="MCP Compatible">

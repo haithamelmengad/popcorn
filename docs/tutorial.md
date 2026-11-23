@@ -4,7 +4,7 @@ This tutorial shows how to analyze videos with AI agents using Popcorn.
 
 ## Prerequisites
 
-1. **Node.js 18+**
+1. **Node.js 20+**
 2. **FFmpeg** - Install via Homebrew, apt, or [official builds](https://ffmpeg.org/download.html)
    ```bash
    # macOS
