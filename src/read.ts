@@ -37,7 +37,8 @@ export async function readFileSlice(options: ReadOptions): Promise<{ content: st
         const segEnd = Number(segment.end ?? 0);
         return segEnd >= start && segStart <= end;
       });
-      const filtered = { ...json, segments };
+      // Only the slice: the raw backend fields hold the full, unfiltered transcript.
+      const filtered = { language: json.language, segments };
       const content = JSON.stringify(filtered, null, 2);
       const trimmed = clampText(content, options.maxChars);
       return { content: trimmed, truncated: trimmed !== content };
