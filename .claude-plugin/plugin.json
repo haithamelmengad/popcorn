@@ -9,5 +9,21 @@
   "homepage": "https://github.com/haithamelmengad/popcorn",
   "repository": "https://github.com/haithamelmengad/popcorn",
   "license": "MIT",
-  "keywords": ["video", "video-analysis", "ffmpeg", "whisper", "transcription", "mcp"]
+  "keywords": [
+    "video",
+    "video-analysis",
+    "ffmpeg",
+    "whisper",
+    "transcription",
+    "mcp"
+  ],
+  "mcpServers": {
+    "popcorn": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "github:haithamelmengad/popcorn"
+      ]
+    }
+  }
 }
