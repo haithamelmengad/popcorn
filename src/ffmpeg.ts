@@ -207,8 +207,9 @@ export async function extractSceneFrames(
   if (timestamps.length === 0) {
     const probe = await probeVideo(videoPath);
     const duration = probe.durationSec ?? 60;
-    const interval = duration / 11;
-    for (let i = 1; i <= 10; i++) {
+    const count = Math.min(10, maxFrames);
+    const interval = duration / (count + 1);
+    for (let i = 1; i <= count; i++) {
       timestamps.push(Number((interval * i).toFixed(2)));
     }
   }
