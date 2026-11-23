@@ -10,7 +10,7 @@
 
 يتيح Popcorn لـ Claude Code ولغيره من وكلاء MCP مشاهدة ملف فيديو على جهازك.
 
-<!-- demo -->
+![Claude Code watching a video with Popcorn: key frames, transcript and an answer with the time](../demo.gif)
 
 يعيد Popcorn الإطارات الرئيسية عند تغير المشاهد، مع نص مفرغ بطوابع زمنية.
 

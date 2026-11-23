@@ -8,7 +8,7 @@
 
 Popcorn 让 Claude Code 和其他 MCP 智能体观看你电脑上的视频文件。
 
-<!-- demo -->
+![Claude Code watching a video with Popcorn: key frames, transcript and an answer with the time](../demo.gif)
 
 它返回场景切换处的关键帧和带时间戳的转录文本。
 

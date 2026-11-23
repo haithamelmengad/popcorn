@@ -8,7 +8,7 @@
 
 Popcorn, Claude Code ve diğer MCP ajanlarının bilgisayarınızdaki bir video dosyasını izlemesini sağlar.
 
-<!-- demo -->
+![Claude Code watching a video with Popcorn: key frames, transcript and an answer with the time](../demo.gif)
 
 Sahne değişimlerinden anahtar kareler ve zaman damgalı bir transkript döndürür.
 

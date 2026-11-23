@@ -8,7 +8,7 @@
 
 Popcorn permite que Claude Code y otros agentes MCP vean un archivo de video de tu equipo.
 
-<!-- demo -->
+![Claude Code watching a video with Popcorn: key frames, transcript and an answer with the time](../demo.gif)
 
 Devuelve fotogramas clave de los cambios de escena y una transcripción con marcas de tiempo.
 

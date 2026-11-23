@@ -8,7 +8,7 @@
 
 Popcorn की मदद से Claude Code और दूसरे MCP एजेंट आपकी मशीन पर रखी वीडियो फ़ाइल देख सकते हैं।
 
-<!-- demo -->
+![Claude Code watching a video with Popcorn: key frames, transcript and an answer with the time](../demo.gif)
 
 यह सीन बदलने की जगहों के मुख्य फ़्रेम और टाइमस्टैम्प वाली ट्रांसक्रिप्ट लौटाता है।
 
