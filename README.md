@@ -120,7 +120,7 @@ Add to Claude Desktop config (`~/Library/Application Support/Claude/claude_deskt
 ### Reference
 
 - **[Troubleshooting](docs/troubleshooting.md)** — Common issues & solutions
-- **[Agent Skill](skills/popcorn-video-analysis/SKILL.md)** — Instructions for AI agents
+- **[Agent Skill](skills/watch/SKILL.md)** — Instructions for AI agents
 - **[API Reference](#mcp-tools)** — Tool schemas & responses
 
 ---

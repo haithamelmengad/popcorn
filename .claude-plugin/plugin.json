@@ -1,0 +1,13 @@
+{
+  "name": "popcorn",
+  "version": "0.5.0",
+  "description": "Watch local video files. Popcorn extracts key frames at scene changes and a local Whisper transcript.",
+  "author": {
+    "name": "haithamelmengad",
+    "url": "https://github.com/haithamelmengad"
+  },
+  "homepage": "https://github.com/haithamelmengad/popcorn",
+  "repository": "https://github.com/haithamelmengad/popcorn",
+  "license": "MIT",
+  "keywords": ["video", "video-analysis", "ffmpeg", "whisper", "transcription", "mcp"]
+}

@@ -1,5 +1,5 @@
 ---
-name: popcorn-video-analysis
+name: watch
 description: Use this skill when asked to watch, review, summarize, or analyze videos. Popcorn extracts transcripts and key frames so you can understand video content without watching in real-time.
 ---
 

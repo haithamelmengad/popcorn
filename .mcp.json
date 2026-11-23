@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "popcorn": {
+      "command": "npx",
+      "args": ["-y", "github:haithamelmengad/popcorn"]
+    }
+  }
+}
