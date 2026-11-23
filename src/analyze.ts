@@ -1,7 +1,7 @@
 import os from "node:os";
 import path from "node:path";
 import fs from "node:fs/promises";
-import { extractAudio, extractFrames, extractSceneFrames, frameToBase64, probeVideo, FrameResult } from "./ffmpeg.js";
+import { extractAudio, extractFrames, extractSceneFrames, frameToBase64, probeVideo, sampleEvenly, FrameResult } from "./ffmpeg.js";
 import { transcribe, TranscriptionBackend } from "./transcribe.js";
 
 export type AnalyzeOptions = {
@@ -62,28 +62,6 @@ export type AnalyzeResult = {
 
 function safeName(name: string): string {
   return name.replace(/[^a-zA-Z0-9._-]/g, "_");
-}
-
-/**
- * Select representative frames to include inline.
- * Tries to pick frames evenly distributed across the video.
- */
-function selectRepresentativeFrames(
-  frames: { path: string; timeSec: number }[],
-  count: number
-): { path: string; timeSec: number }[] {
-  if (frames.length <= count) return frames;
-  if (count === 1) return [frames[Math.floor(frames.length / 2)]];
-
-  const selected: { path: string; timeSec: number }[] = [];
-  const step = (frames.length - 1) / (count - 1);
-
-  for (let i = 0; i < count; i++) {
-    const index = Math.round(i * step);
-    selected.push(frames[index]);
-  }
-
-  return selected;
 }
 
 export async function analyzeVideo(
@@ -166,7 +144,8 @@ export async function analyzeVideo(
         videoPath,
         framesDir,
         options.framesPerMin,
-        options.maxFrames
+        options.maxFrames,
+        video.durationSec
       );
     }
   } catch (error) {
@@ -176,7 +155,7 @@ export async function analyzeVideo(
   // Generate inline base64 frames if requested
   let inlineFrames: InlineFrame[] | undefined;
   if (options.inlineFrames > 0 && frameInfo && frameInfo.frames.length > 0) {
-    const selectedFrames = selectRepresentativeFrames(frameInfo.frames, options.inlineFrames);
+    const selectedFrames = sampleEvenly(frameInfo.frames, options.inlineFrames);
     inlineFrames = [];
 
     for (const frame of selectedFrames) {
