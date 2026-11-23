@@ -1,6 +1,6 @@
 {
   "name": "claude-popcorn",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "MCP server that generates transcripts and keyframes for long-form video analysis.",
   "license": "MIT",
   "repository": {

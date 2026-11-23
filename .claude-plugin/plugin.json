@@ -1,6 +1,6 @@
 {
   "name": "popcorn",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Watch local video files. Popcorn extracts key frames at scene changes and a local Whisper transcript.",
   "author": {
     "name": "haithamelmengad",

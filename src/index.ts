@@ -65,7 +65,7 @@ const SuggestInput = z.object({
 const server = new Server(
   {
     name: "popcorn",
-    version: "0.5.0",
+    version: "0.5.1",
   },
   {
     capabilities: {
