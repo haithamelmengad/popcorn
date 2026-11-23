@@ -136,7 +136,7 @@ For long videos, read transcript sections:
 ```json
 {
   "configUsed": { "videoType": "screencast", "objective": "detailed" },
-  "video": { "durationSec": 5400, "resolution": "1920x1080" },
+  "video": { "durationSec": 5400, "video": { "width": 1920, "height": 1080 } },
   "transcript": {
     "available": true,
     "textExcerpt": "Welcome to this tutorial...",
@@ -150,9 +150,9 @@ For long videos, read transcript sections:
       { "path": "/path/to/frame.jpg", "timeSec": 23.5 }
     ]
   },
-  "inlineFrames": { "count": 15, "note": "Images below" }
+  "inlineFrames": { "count": 30, "note": "Images below" }
 }
-// Followed by 15 inline images
+// Followed by 30 inline images
 ```
 
 ## Best Practices

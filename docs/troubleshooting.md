@@ -52,8 +52,6 @@ brew install whisper-cpp
 pip install faster-whisper
 ```
 
-On macOS 13+, the `macos-native` backend works without any install (uses built-in speech recognition).
-
 Use `popcorn_backends` tool to see what's available on your system.
 
 ### Transcription is slow
@@ -124,7 +122,7 @@ For long videos, transcripts can be huge. Options:
 
 ### Inline images not appearing
 
-Check that `inlineFrames` > 0 (default is 10-15 depending on preset).
+Check that `inlineFrames` > 0 (default is 5 to 30 depending on the objective, 10 when no objective is set).
 
 Some MCP clients may not render inline images. The images are also saved to disk in the `assets/frames/` directory.
 

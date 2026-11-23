@@ -255,9 +255,14 @@ Popcorn auto-detects your system and recommends the best backend.
 | `model` | string | Whisper model (`tiny`, `base`, `small`, `medium`, `large`) |
 | `language` | string | Language code (e.g., `en`, `es`, `fr`) |
 | `frameMode` | string | `scene` or `interval` |
+| `framesPerMin` | number | Frames per minute in `interval` mode |
 | `sceneThreshold` | number | Scene sensitivity (0-1) |
+| `minSceneInterval` | number | Minimum seconds between scene frames |
 | `maxFrames` | number | Maximum frames to extract |
 | `inlineFrames` | number | Frames to return as base64 |
+| `maxChunkChars` | number | Transcript chunk size in characters |
+| `maxTranscriptChars` | number | Length of the transcript excerpt in the response |
+| `outDir` | string | Output directory for the analysis bundle |
 
 ### Output Structure
 
@@ -327,6 +332,7 @@ popcorn/
 │   ├── ffmpeg.ts       # Video processing
 │   ├── transcribe.ts   # Multi-backend transcription
 │   ├── presets.ts      # Video type presets
+│   ├── read.ts         # File and transcript reading
 │   └── commands.ts     # Shell execution
 ├── docs/               # Documentation
 └── skills/             # Agent skills
