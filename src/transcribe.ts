@@ -424,18 +424,24 @@ async function transcribeWithMLXWhisper(
   const pythonScript = `
 import mlx_whisper
 import json
+import sys
+
+audio_path, output_path, model, language = sys.argv[1:5]
 
 result = mlx_whisper.transcribe(
-    "${audioPath}",
-    path_or_hf_repo="mlx-community/whisper-${options.model ?? "base"}-mlx",
-    ${options.language ? `language="${options.language}",` : ""}
+    audio_path,
+    path_or_hf_repo="mlx-community/whisper-" + model + "-mlx",
+    language=language or None,
 )
 
-with open("${outputPath}", "w") as f:
+with open(output_path, "w") as f:
     json.dump(result, f)
 `;
 
-  const result = await runCommand("python3", ["-c", pythonScript]);
+  // Values go in as argv, never into the Python source: they come from the LLM.
+  const result = await runCommand("python3", [
+    "-c", pythonScript, audioPath, outputPath, options.model ?? "base", options.language ?? "",
+  ]);
   if (result.exitCode !== 0) {
     throw new Error(`mlx-whisper failed: ${result.stderr || result.stdout}`);
   }
@@ -481,11 +487,14 @@ async function transcribeWithFasterWhisper(
   const pythonScript = `
 from faster_whisper import WhisperModel
 import json
+import sys
 
-model = WhisperModel("${options.model ?? "base"}", device="auto", compute_type="auto")
+audio_path, output_path, model_name, language = sys.argv[1:5]
+
+model = WhisperModel(model_name, device="auto", compute_type="auto")
 segments, info = model.transcribe(
-    "${audioPath}",
-    ${options.language ? `language="${options.language}",` : ""}
+    audio_path,
+    language=language or None,
     beam_size=5
 )
 
@@ -497,11 +506,13 @@ result = {
     ]
 }
 
-with open("${outputPath}", "w") as f:
+with open(output_path, "w") as f:
     json.dump(result, f)
 `;
 
-  const result = await runCommand("python3", ["-c", pythonScript]);
+  const result = await runCommand("python3", [
+    "-c", pythonScript, audioPath, outputPath, options.model ?? "base", options.language ?? "",
+  ]);
   if (result.exitCode !== 0) {
     throw new Error(`faster-whisper failed: ${result.stderr || result.stdout}`);
   }
