@@ -19,7 +19,7 @@
 <div dir="ltr">
 
 ```bash
-claude mcp add popcorn -- npx -y github:haithamelmengad/claude-popcorn
+claude mcp add popcorn -- npx -y claude-popcorn
 ```
 
 </div>
@@ -49,7 +49,7 @@ claude mcp add popcorn -- npx -y github:haithamelmengad/claude-popcorn
 |--------|---------|
 | Claude Code | الأمر أو الإضافة أعلاه |
 | Claude Desktop | أضف الخادم إلى `claude_desktop_config.json`. راجع [البدء السريع](#البدء-السريع) |
-| Codex | `codex mcp add popcorn -- npx -y github:haithamelmengad/claude-popcorn` |
+| Codex | `codex mcp add popcorn -- npx -y claude-popcorn` |
 | Cursor | أضف مدخل `mcpServers` نفسه إلى &lrm;`~/.cursor/mcp.json` |
 
 **المتطلبات**
@@ -102,7 +102,7 @@ pip install mlx-whisper                # Apple Silicon (fastest)
 pip install openai-whisper             # Any platform
 
 # Add Popcorn to Claude Code
-claude mcp add popcorn -- npx -y github:haithamelmengad/claude-popcorn
+claude mcp add popcorn -- npx -y claude-popcorn
 ```
 
 </div>
@@ -116,7 +116,7 @@ claude mcp add popcorn -- npx -y github:haithamelmengad/claude-popcorn
   "mcpServers": {
     "popcorn": {
       "command": "npx",
-      "args": ["-y", "github:haithamelmengad/claude-popcorn"]
+      "args": ["-y", "claude-popcorn"]
     }
   }
 }

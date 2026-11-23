@@ -1,6 +1,6 @@
 {
   "name": "popcorn",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Watch local video files. Popcorn extracts key frames at scene changes and a local Whisper transcript.",
   "author": {
     "name": "haithamelmengad",
@@ -22,7 +22,7 @@
       "command": "npx",
       "args": [
         "-y",
-        "github:haithamelmengad/claude-popcorn"
+        "claude-popcorn@0.5.2"
       ]
     }
   }

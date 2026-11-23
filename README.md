@@ -15,7 +15,7 @@ It returns key frames from the scene changes and a timestamped transcript.
 **Install for Claude Code**
 
 ```bash
-claude mcp add popcorn -- npx -y github:haithamelmengad/claude-popcorn
+claude mcp add popcorn -- npx -y claude-popcorn
 ```
 
 **Or install it as a Claude Code plugin.** This also adds the `/popcorn:watch` skill. Run these inside Claude Code:
@@ -39,7 +39,7 @@ Ask in plain words and give the full path to the video:
 |--------|-------|
 | Claude Code | The command or the plugin above |
 | Claude Desktop | Add the server to `claude_desktop_config.json`. See [Quick Start](#quick-start) |
-| Codex | `codex mcp add popcorn -- npx -y github:haithamelmengad/claude-popcorn` |
+| Codex | `codex mcp add popcorn -- npx -y claude-popcorn` |
 | Cursor | Add the same `mcpServers` entry to `~/.cursor/mcp.json` |
 
 **Requirements**
@@ -89,7 +89,7 @@ pip install mlx-whisper                # Apple Silicon (fastest)
 pip install openai-whisper             # Any platform
 
 # Add Popcorn to Claude Code
-claude mcp add popcorn -- npx -y github:haithamelmengad/claude-popcorn
+claude mcp add popcorn -- npx -y claude-popcorn
 ```
 
 For Claude Desktop, add this to `~/Library/Application Support/Claude/claude_desktop_config.json`:
@@ -99,7 +99,7 @@ For Claude Desktop, add this to `~/Library/Application Support/Claude/claude_des
   "mcpServers": {
     "popcorn": {
       "command": "npx",
-      "args": ["-y", "github:haithamelmengad/claude-popcorn"]
+      "args": ["-y", "claude-popcorn"]
     }
   }
 }

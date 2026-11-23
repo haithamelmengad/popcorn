@@ -1,7 +1,7 @@
 {
   "name": "claude-popcorn",
   "mcpName": "io.github.haithamelmengad/claude-popcorn",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "MCP server that generates transcripts and keyframes for long-form video analysis.",
   "license": "MIT",
   "repository": {
