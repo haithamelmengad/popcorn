@@ -100,7 +100,7 @@ For Claude Desktop, add this to `~/Library/Application Support/Claude/claude_des
 - **Inline Images** — Returns key frames directly in MCP responses
 - **Smart Presets** — Auto-configures for screencasts, presentations, movies, interviews
 - **Zero Config** — Just pass a video path and it works
-- **Privacy First** — Everything runs locally, no data leaves your machine
+- **Privacy First** — Everything runs locally, no data leaves your machine. Whisper models are downloaded once, on first use
 
 ---
 
