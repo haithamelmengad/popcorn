@@ -123,7 +123,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
             description: "Transcription backend. 'auto' picks the best available. Options: whisper (OpenAI, most compatible), whisper-cpp (fast C++), mlx-whisper (Apple Silicon optimized), faster-whisper (GPU accelerated).",
           },
           language: { type: "string", description: "Transcription language code (e.g., 'en')." },
-          model: { type: "string", description: "Whisper model: tiny, base, small, medium, large." },
+          model: { type: "string", description: "Whisper model: tiny, base, small, medium, large. For whisper-cpp: path to a ggml model file." },
           frameMode: {
             type: "string",
             enum: ["interval", "scene"],

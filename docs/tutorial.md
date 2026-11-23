@@ -21,7 +21,8 @@ This tutorial shows how to analyze videos with AI agents using Popcorn.
    # Any platform (most compatible)
    pip install openai-whisper
 
-   # macOS/Linux (fast C++ version)
+   # macOS/Linux (fast C++ version). Also needs a model file:
+   # set WHISPER_CPP_MODEL to the path of a ggml model.
    brew install whisper-cpp
 
    # NVIDIA GPU (fastest with GPU)

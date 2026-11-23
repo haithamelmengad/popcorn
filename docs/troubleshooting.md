@@ -45,7 +45,8 @@ pip install mlx-whisper
 # Any platform (most compatible)
 pip install openai-whisper
 
-# macOS (fast C++ version)
+# macOS (fast C++ version). Also needs a model file:
+# set WHISPER_CPP_MODEL to the path of a ggml model.
 brew install whisper-cpp
 
 # NVIDIA GPU (fastest on GPU)

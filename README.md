@@ -218,6 +218,8 @@ Popcorn auto-detects your system and recommends the best backend.
 | **whisper-cpp** | Moderate | Cross-platform | `brew install whisper-cpp` |
 | **whisper** | Slow | Most compatible | `pip install openai-whisper` |
 
+whisper-cpp needs a model file. Download a ggml model from [whisper.cpp](https://github.com/ggml-org/whisper.cpp/tree/master/models) and set the `WHISPER_CPP_MODEL` environment variable to its path, or pass the path as `model`. Without a model file, Popcorn reports this backend as not available.
+
 ### Processing Times (60-min video)
 
 | Backend | Time |
@@ -252,7 +254,7 @@ Popcorn auto-detects your system and recommends the best backend.
 | `objective` | string | Analysis objective preset |
 | `transcribe` | boolean | Enable/disable transcription |
 | `backend` | string | Transcription backend |
-| `model` | string | Whisper model (`tiny`, `base`, `small`, `medium`, `large`) |
+| `model` | string | Whisper model (`tiny`, `base`, `small`, `medium`, `large`). For whisper-cpp: path to a ggml model file |
 | `language` | string | Language code (e.g., `en`, `es`, `fr`) |
 | `frameMode` | string | `scene` or `interval` |
 | `framesPerMin` | number | Frames per minute in `interval` mode |
