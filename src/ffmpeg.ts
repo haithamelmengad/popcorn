@@ -181,8 +181,6 @@ export async function extractSceneFrames(
     videoPath,
     "-vf",
     `select='gt(scene,${sceneThreshold})',showinfo`,
-    "-vsync",
-    "vfr",
     "-f",
     "null",
     "-",
