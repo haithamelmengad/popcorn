@@ -39,8 +39,8 @@ brew install ffmpeg                    # macOS
 sudo apt install ffmpeg                # Ubuntu/Debian
 
 # Popcorn 설치
-git clone https://github.com/haithamelmengad/popcorn.git
-cd popcorn && npm install && npm run build
+git clone https://github.com/haithamelmengad/claude-popcorn.git
+cd claude-popcorn && npm install && npm run build
 
 # 선택사항: 음성 인식 백엔드 설치
 pip install mlx-whisper                # Apple Silicon (가장 빠름)

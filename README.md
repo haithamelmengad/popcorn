@@ -11,13 +11,13 @@ Popcorn lets Claude Code and other MCP agents watch a video file on your machine
 **Install for Claude Code**
 
 ```bash
-claude mcp add popcorn -- npx -y github:haithamelmengad/popcorn
+claude mcp add popcorn -- npx -y github:haithamelmengad/claude-popcorn
 ```
 
 **Or install it as a Claude Code plugin.** This also adds the `/popcorn:watch` skill. Run these inside Claude Code:
 
 ```
-/plugin marketplace add haithamelmengad/popcorn
+/plugin marketplace add haithamelmengad/claude-popcorn
 /plugin install popcorn@popcorn
 ```
 
@@ -27,7 +27,7 @@ claude mcp add popcorn -- npx -y github:haithamelmengad/popcorn
 |--------|-------|
 | Claude Code | The command or the plugin above |
 | Claude Desktop | Add the server to `claude_desktop_config.json`. See [Quick Start](#quick-start) |
-| Codex | `codex mcp add popcorn -- npx -y github:haithamelmengad/popcorn` |
+| Codex | `codex mcp add popcorn -- npx -y github:haithamelmengad/claude-popcorn` |
 | Cursor | Add the same `mcpServers` entry to `~/.cursor/mcp.json` |
 
 **Requirements**
@@ -77,7 +77,7 @@ pip install mlx-whisper                # Apple Silicon (fastest)
 pip install openai-whisper             # Any platform
 
 # Add Popcorn to Claude Code
-claude mcp add popcorn -- npx -y github:haithamelmengad/popcorn
+claude mcp add popcorn -- npx -y github:haithamelmengad/claude-popcorn
 ```
 
 For Claude Desktop, add this to `~/Library/Application Support/Claude/claude_desktop_config.json`:
@@ -87,7 +87,7 @@ For Claude Desktop, add this to `~/Library/Application Support/Claude/claude_des
   "mcpServers": {
     "popcorn": {
       "command": "npx",
-      "args": ["-y", "github:haithamelmengad/popcorn"]
+      "args": ["-y", "github:haithamelmengad/claude-popcorn"]
     }
   }
 }
@@ -319,8 +319,8 @@ See **[Troubleshooting Guide](docs/troubleshooting.md)** for more solutions.
 ## Development
 
 ```bash
-git clone https://github.com/haithamelmengad/popcorn.git
-cd popcorn
+git clone https://github.com/haithamelmengad/claude-popcorn.git
+cd claude-popcorn
 npm install          # Install dependencies
 npm run build        # Build
 npm test             # Smoke test (needs ffmpeg)
@@ -331,7 +331,7 @@ npm start            # Run server
 ### Project Structure
 
 ```
-popcorn/
+claude-popcorn/
 ├── src/
 │   ├── index.ts        # MCP server
 │   ├── analyze.ts      # Analysis pipeline

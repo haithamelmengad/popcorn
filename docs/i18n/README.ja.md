@@ -39,8 +39,8 @@ brew install ffmpeg                    # macOS
 sudo apt install ffmpeg                # Ubuntu/Debian
 
 # Popcornをインストール
-git clone https://github.com/haithamelmengad/popcorn.git
-cd popcorn && npm install && npm run build
+git clone https://github.com/haithamelmengad/claude-popcorn.git
+cd claude-popcorn && npm install && npm run build
 
 # オプション：文字起こしバックエンドをインストール
 pip install mlx-whisper                # Apple Silicon（最速）

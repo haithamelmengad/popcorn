@@ -32,8 +32,8 @@ This tutorial shows how to analyze videos with AI agents using Popcorn.
 ## Setup
 
 ```bash
-git clone https://github.com/haithamelmengad/popcorn.git
-cd popcorn
+git clone https://github.com/haithamelmengad/claude-popcorn.git
+cd claude-popcorn
 npm install
 npm run build
 ```
@@ -241,7 +241,7 @@ Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
   "mcpServers": {
     "popcorn": {
       "command": "node",
-      "args": ["/absolute/path/to/popcorn/dist/index.js"]
+      "args": ["/absolute/path/to/claude-popcorn/dist/index.js"]
     }
   }
 }

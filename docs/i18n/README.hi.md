@@ -39,8 +39,8 @@ brew install ffmpeg                    # macOS
 sudo apt install ffmpeg                # Ubuntu/Debian
 
 # Popcorn इंस्टॉल करें
-git clone https://github.com/haithamelmengad/popcorn.git
-cd popcorn && npm install && npm run build
+git clone https://github.com/haithamelmengad/claude-popcorn.git
+cd claude-popcorn && npm install && npm run build
 
 # वैकल्पिक: ट्रांसक्रिप्शन बैकएंड इंस्टॉल करें
 pip install mlx-whisper                # Apple Silicon (सबसे तेज़)

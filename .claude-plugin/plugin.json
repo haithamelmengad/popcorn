@@ -6,8 +6,8 @@
     "name": "haithamelmengad",
     "url": "https://github.com/haithamelmengad"
   },
-  "homepage": "https://github.com/haithamelmengad/popcorn",
-  "repository": "https://github.com/haithamelmengad/popcorn",
+  "homepage": "https://github.com/haithamelmengad/claude-popcorn",
+  "repository": "https://github.com/haithamelmengad/claude-popcorn",
   "license": "MIT",
   "keywords": [
     "video",
@@ -22,7 +22,7 @@
       "command": "npx",
       "args": [
         "-y",
-        "github:haithamelmengad/popcorn"
+        "github:haithamelmengad/claude-popcorn"
       ]
     }
   }
