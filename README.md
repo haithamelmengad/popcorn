@@ -1,8 +1,3 @@
-<p align="center">
-  <a href="#quick-start">README</a> •
-  <a href="LICENSE">⚖️ License</a>
-</p>
-
 <h1 align="center">
   <br>
   🍿
@@ -10,6 +5,36 @@
   popcorn
   <br>
 </h1>
+
+Popcorn lets Claude Code and other MCP agents watch a video file on your machine. It returns key frames from the scene changes and a timestamped transcript.
+
+**Install for Claude Code**
+
+```bash
+claude mcp add popcorn -- npx -y github:haithamelmengad/popcorn
+```
+
+**Or install it as a Claude Code plugin.** This also adds the `/popcorn:watch` skill. Run these inside Claude Code:
+
+```
+/plugin marketplace add haithamelmengad/popcorn
+/plugin install popcorn@popcorn
+```
+
+**Works with**
+
+| Client | Setup |
+|--------|-------|
+| Claude Code | The command or the plugin above |
+| Claude Desktop | Add the server to `claude_desktop_config.json`. See [Quick Start](#quick-start) |
+| Codex | `codex mcp add popcorn -- npx -y github:haithamelmengad/popcorn` |
+| Cursor | Add the same `mcpServers` entry to `~/.cursor/mcp.json` |
+
+**Requirements**
+
+- [FFmpeg](https://ffmpeg.org/) on your PATH
+- Node.js 20 or newer
+- One Whisper backend for transcripts. Without one you still get the frames. See [Transcription Backends](#transcription-backends)
 
 <p align="center">
   <a href="docs/i18n/README.zh.md">🇨🇳 中文</a> •
@@ -28,25 +53,6 @@
   <a href="docs/i18n/README.hi.md">🇮🇳 हिन्दी</a>
 </p>
 
-<h4 align="center">An agent skill that gives any coding agent the ability to watch and understand video. Works with <a href="https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/overview" target="_blank">Claude Code</a>, <a href="https://openai.com/index/introducing-codex/" target="_blank">Codex</a>, and any MCP-compatible agent.</h4>
-
-<p align="center">
-  <a href="LICENSE">
-    <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License">
-  </a>
-  <a href="package.json">
-    <img src="https://img.shields.io/badge/version-0.5.0-green.svg" alt="Version">
-  </a>
-  <a href="package.json">
-    <img src="https://img.shields.io/badge/node-%3E%3D20-brightgreen.svg" alt="Node">
-  </a>
-  <a href="https://modelcontextprotocol.io">
-    <img src="https://img.shields.io/badge/MCP-Compatible-purple.svg" alt="MCP Compatible">
-  </a>
-</p>
-
-<br>
-
 <p align="center">
   <a href="#quick-start">Quick Start</a> •
   <a href="#how-it-works">How It Works</a> •
@@ -55,10 +61,6 @@
   <a href="#configuration">Configuration</a> •
   <a href="#troubleshooting">Troubleshooting</a> •
   <a href="#license">License</a>
-</p>
-
-<p align="center">
-  Popcorn enables AI agents to watch and understand long-form videos by extracting transcripts, detecting scene changes, and returning key frames. Everything runs locally—no external APIs, no fees, complete privacy.
 </p>
 
 ---
@@ -70,23 +72,22 @@
 brew install ffmpeg                    # macOS
 sudo apt install ffmpeg                # Ubuntu/Debian
 
-# Install Popcorn
-git clone https://github.com/haithamelmengad/popcorn.git
-cd popcorn && npm install && npm run build
-
 # Optional: Install a transcription backend
 pip install mlx-whisper                # Apple Silicon (fastest)
 pip install openai-whisper             # Any platform
+
+# Add Popcorn to Claude Code
+claude mcp add popcorn -- npx -y github:haithamelmengad/popcorn
 ```
 
-Add to Claude Desktop config (`~/Library/Application Support/Claude/claude_desktop_config.json`):
+For Claude Desktop, add this to `~/Library/Application Support/Claude/claude_desktop_config.json`:
 
 ```json
 {
   "mcpServers": {
     "popcorn": {
-      "command": "node",
-      "args": ["/path/to/popcorn/dist/index.js"]
+      "command": "npx",
+      "args": ["-y", "github:haithamelmengad/popcorn"]
     }
   }
 }
@@ -318,6 +319,8 @@ See **[Troubleshooting Guide](docs/troubleshooting.md)** for more solutions.
 ## Development
 
 ```bash
+git clone https://github.com/haithamelmengad/popcorn.git
+cd popcorn
 npm install          # Install dependencies
 npm run build        # Build
 npm run dev          # Development mode
