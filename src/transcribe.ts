@@ -387,8 +387,9 @@ async function transcribeWithWhisperCpp(
   // whisper.cpp format is slightly different
   const segments: TranscriptSegment[] = Array.isArray(json.transcription)
     ? json.transcription.map((segment: any) => ({
-        start: Number(segment.timestamps?.from?.replace(":", ".") ?? segment.offsets?.from ?? 0) / 1000,
-        end: Number(segment.timestamps?.to?.replace(":", ".") ?? segment.offsets?.to ?? 0) / 1000,
+        // offsets are milliseconds. timestamps are "HH:MM:SS,mmm" strings.
+        start: Number(segment.offsets?.from ?? 0) / 1000,
+        end: Number(segment.offsets?.to ?? 0) / 1000,
         text: String(segment.text ?? "").trim(),
       }))
     : [];
