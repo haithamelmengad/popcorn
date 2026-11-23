@@ -608,6 +608,3 @@ export async function transcribe(
       };
   }
 }
-
-// Keep backwards compatibility
-export const transcribeWithWhisper = transcribe;

@@ -6,7 +6,7 @@
 export type VideoType =
   | "screencast"      // Screen recordings, tutorials, coding sessions
   | "presentation"    // Slides, keynotes, lectures
-  | "movie"           // Films, TV shows, cinematicontent
+  | "movie"           // Films, TV shows, cinematic content
   | "interview"       // Talking heads, podcasts, conversations
   | "surveillance"    // Security footage, dashcam, long static shots
   | "sports"          // Fast action, live events
