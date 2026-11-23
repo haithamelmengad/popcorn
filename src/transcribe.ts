@@ -573,17 +573,17 @@ export async function transcribe(
       };
     }
     backend = detected;
-  }
-
-  // Verify selected backend is available
-  const backends = await detectAvailableBackends();
-  const selected = backends.find(b => b.name === backend);
-  if (!selected?.available) {
-    return {
-      available: false,
-      text: "",
-      segments: [],
-    };
+  } else {
+    // Verify selected backend is available (auto mode already did this above)
+    const backends = await detectAvailableBackends();
+    const selected = backends.find(b => b.name === backend);
+    if (!selected?.available) {
+      return {
+        available: false,
+        text: "",
+        segments: [],
+      };
+    }
   }
 
   // Route to appropriate backend
