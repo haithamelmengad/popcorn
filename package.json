@@ -3,6 +3,26 @@
   "version": "0.4.0",
   "description": "MCP server that generates transcripts and keyframes for long-form video analysis.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haithamelmengad/popcorn.git"
+  },
+  "homepage": "https://github.com/haithamelmengad/popcorn#readme",
+  "bugs": {
+    "url": "https://github.com/haithamelmengad/popcorn/issues"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "model-context-protocol",
+    "claude-code",
+    "video",
+    "video-analysis",
+    "ffmpeg",
+    "whisper",
+    "transcription",
+    "scene-detection"
+  ],
   "type": "module",
   "engines": {
     "node": ">=20"
@@ -10,6 +30,9 @@
   "bin": {
     "popcorn-mcp": "dist/index.js"
   },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "prepare": "npm run build",
