@@ -6,7 +6,11 @@
   <br>
 </h1>
 
-Popcorn lets Claude Code and other MCP agents watch a video file on your machine. It returns key frames from the scene changes and a timestamped transcript.
+Popcorn lets Claude Code and other MCP agents watch a video file on your machine.
+
+<!-- demo -->
+
+It returns key frames from the scene changes and a timestamped transcript.
 
 **Install for Claude Code**
 
@@ -20,6 +24,14 @@ claude mcp add popcorn -- npx -y github:haithamelmengad/claude-popcorn
 /plugin marketplace add haithamelmengad/claude-popcorn
 /plugin install popcorn@popcorn
 ```
+
+**Try it**
+
+Ask in plain words and give the full path to the video:
+
+- `Watch /path/to/talk.mp4 and tell me what it is about.`
+- `In /path/to/talk.mp4, where do they talk about pricing? Give me the time.`
+- `Give me the transcript of /path/to/talk.mp4 from 0:20 to 0:30.`
 
 **Works with**
 
@@ -372,6 +384,8 @@ MIT License — see [LICENSE](LICENSE) for details.
 - [Model Context Protocol](https://modelcontextprotocol.io/) — MCP spec
 
 ---
+
+Popcorn is an independent project. It is not affiliated with or endorsed by Anthropic.
 
 <p align="center">
   Made with 🍿 for AI agents everywhere
