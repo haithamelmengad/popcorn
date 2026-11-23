@@ -72,6 +72,7 @@ function selectRepresentativeFrames(
   count: number
 ): { path: string; timeSec: number }[] {
   if (frames.length <= count) return frames;
+  if (count === 1) return [frames[Math.floor(frames.length / 2)]];
 
   const selected: { path: string; timeSec: number }[] = [];
   const step = (frames.length - 1) / (count - 1);
