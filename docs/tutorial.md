@@ -31,7 +31,7 @@ This tutorial shows how to analyze videos with AI agents using Popcorn.
 ## Setup
 
 ```bash
-git clone https://github.com/anthropics/popcorn.git
+git clone https://github.com/haithamelmengad/popcorn.git
 cd popcorn
 npm install
 npm run build

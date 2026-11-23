@@ -185,7 +185,7 @@ The path must be absolute, not relative.
 
 ## Still Having Issues?
 
-1. Check the GitHub issues: [github.com/anthropics/popcorn/issues](https://github.com/anthropics/popcorn/issues)
+1. Check the GitHub issues: [github.com/haithamelmengad/popcorn/issues](https://github.com/haithamelmengad/popcorn/issues)
 2. Run with debug output: Check console for error messages
 3. Open an issue with:
    - Your OS and Node.js version

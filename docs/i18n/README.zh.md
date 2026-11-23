@@ -39,7 +39,7 @@ brew install ffmpeg                    # macOS
 sudo apt install ffmpeg                # Ubuntu/Debian
 
 # 安装 Popcorn
-git clone https://github.com/anthropics/popcorn.git
+git clone https://github.com/haithamelmengad/popcorn.git
 cd popcorn && npm install && npm run build
 
 # 可选：安装转录后端
