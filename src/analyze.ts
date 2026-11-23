@@ -123,7 +123,12 @@ export async function analyzeVideo(
       });
 
       if (!transcriptResult.available) {
-        warnings.push("No transcription backend available; skipping transcription. Run 'popcorn_backends' to see installation options.");
+        const backend = options.backend ?? "auto";
+        warnings.push(
+          backend === "auto"
+            ? "No transcription backend available; skipping transcription. Run 'popcorn_backends' to see installation options."
+            : `Transcription backend '${backend}' is not available; skipping transcription. Run 'popcorn_backends' to see what is installed.`
+        );
       }
     } catch (error) {
       warnings.push(`Transcription failed: ${(error as Error).message}`);
@@ -151,6 +156,9 @@ export async function analyzeVideo(
         options.maxFrames,
         video.durationSec
       );
+    }
+    if (frameInfo.count === 0) {
+      warnings.push("No frames were extracted. The file may have no video stream.");
     }
   } catch (error) {
     warnings.push(`Frame extraction failed: ${(error as Error).message}`);

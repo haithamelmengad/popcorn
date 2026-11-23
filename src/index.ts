@@ -203,7 +203,11 @@ async function callTool(tool: string, args: Record<string, unknown>) {
           path: input.path,
           filename,
           durationSec: videoInfo.durationSec,
-          durationFormatted: durationMin ? `${durationMin} minutes` : "unknown",
+          durationFormatted: !videoInfo.durationSec
+            ? "unknown"
+            : videoInfo.durationSec < 60
+              ? `${Math.round(videoInfo.durationSec)} seconds`
+              : `${durationMin} minutes`,
           resolution: videoInfo.video?.width && videoInfo.video?.height
             ? `${videoInfo.video.width}x${videoInfo.video.height}`
             : "unknown",
