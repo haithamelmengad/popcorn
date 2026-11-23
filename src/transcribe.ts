@@ -325,6 +325,7 @@ async function transcribeWithOpenAIWhisper(
   const baseName = path.basename(audioPath, path.extname(audioPath));
   const outputJsonPath = path.join(outDir, `${baseName}.json`);
   const jsonRaw = await fs.readFile(outputJsonPath, "utf8");
+  await fs.rm(outputJsonPath); // its content is kept in transcript.json
   const json = JSON.parse(jsonRaw);
 
   const segments: TranscriptSegment[] = Array.isArray(json.segments)
@@ -448,6 +449,7 @@ with open(output_path, "w") as f:
   }
 
   const jsonRaw = await fs.readFile(outputPath, "utf8");
+  await fs.rm(outputPath); // its content is kept in transcript.json
   const json = JSON.parse(jsonRaw);
 
   const segments: TranscriptSegment[] = Array.isArray(json.segments)
@@ -519,6 +521,7 @@ with open(output_path, "w") as f:
   }
 
   const jsonRaw = await fs.readFile(outputPath, "utf8");
+  await fs.rm(outputPath); // its content is kept in transcript.json
   const json = JSON.parse(jsonRaw);
 
   const segments: TranscriptSegment[] = Array.isArray(json.segments)
