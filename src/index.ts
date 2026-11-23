@@ -143,7 +143,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
     {
       name: "popcorn_read",
       description:
-        "Read a file from an analysis bundle with optional line slicing or transcript time filtering.",
+        "Read a .json or .txt file from an analysis bundle with optional line slicing or transcript time filtering.",
       inputSchema: {
         type: "object",
         properties: {
@@ -176,7 +176,8 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
   switch (tool) {
     case "popcorn_suggest": {
       const input = SuggestInput.parse(args);
-      const videoInfo = await probeVideo(input.path);
+      // Same rule as analyzeVideo: a real file path only, no URLs or options.
+      const videoInfo = await probeVideo(path.resolve(input.path));
       const filename = path.basename(input.path);
 
       // Suggest video type based on metadata

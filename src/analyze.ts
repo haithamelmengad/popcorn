@@ -68,6 +68,10 @@ export async function analyzeVideo(
   videoPath: string,
   options: AnalyzeOptions
 ): Promise<AnalyzeResult> {
+  // A real file path only: this stops URLs and names that start with a dash
+  // from reaching ffmpeg as protocols or options.
+  videoPath = path.resolve(videoPath);
+
   const warnings: string[] = [];
   const baseName = safeName(path.basename(videoPath, path.extname(videoPath)));
   const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
