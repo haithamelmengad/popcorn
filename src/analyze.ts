@@ -96,9 +96,10 @@ export async function analyzeVideo(
     ? path.resolve(options.outDir)
     : path.resolve(process.cwd(), ".popcorn", `${baseName}_${timestamp}`);
 
-  await fs.mkdir(outDir, { recursive: true });
-
+  // Probe first so a bad path does not leave an empty output folder behind.
   const video = await probeVideo(videoPath);
+
+  await fs.mkdir(outDir, { recursive: true });
 
   let transcriptResult: {
     available: boolean;
