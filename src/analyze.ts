@@ -1,3 +1,4 @@
+import os from "node:os";
 import path from "node:path";
 import fs from "node:fs/promises";
 import { extractAudio, extractFrames, extractSceneFrames, frameToBase64, probeVideo, FrameResult } from "./ffmpeg.js";
@@ -92,14 +93,22 @@ export async function analyzeVideo(
   const warnings: string[] = [];
   const baseName = safeName(path.basename(videoPath, path.extname(videoPath)));
   const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
-  const outDir = options.outDir
+  const dirName = `${baseName}_${timestamp}`;
+  let outDir = options.outDir
     ? path.resolve(options.outDir)
-    : path.resolve(process.cwd(), ".popcorn", `${baseName}_${timestamp}`);
+    : path.resolve(process.cwd(), ".popcorn", dirName);
 
   // Probe first so a bad path does not leave an empty output folder behind.
   const video = await probeVideo(videoPath);
 
-  await fs.mkdir(outDir, { recursive: true });
+  try {
+    await fs.mkdir(outDir, { recursive: true });
+  } catch (error) {
+    if (options.outDir) throw error;
+    // Some clients start the server in a folder it cannot write to, such as "/".
+    outDir = path.join(os.homedir(), ".popcorn", dirName);
+    await fs.mkdir(outDir, { recursive: true });
+  }
 
   let transcriptResult: {
     available: boolean;

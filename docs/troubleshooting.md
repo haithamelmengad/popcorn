@@ -153,9 +153,7 @@ Ensure:
 
 ### Can't write output
 
-The output directory defaults to `.popcorn/` in the current working directory. Either:
-1. Ensure write permissions in current directory
-2. Specify a custom output: `"outDir": "/path/to/output"`
+The output directory defaults to `.popcorn/` in the current working directory. If that folder cannot be created, Popcorn writes to `~/.popcorn/`. To choose the folder yourself, set `"outDir": "/path/to/output"`.
 
 ## MCP Integration
 
