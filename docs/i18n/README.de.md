@@ -8,7 +8,7 @@
 
 Mit Popcorn können Claude Code und andere MCP-Agenten eine Videodatei auf deinem Rechner ansehen.
 
-<!-- demo -->
+![Claude Code watching a video with Popcorn: key frames, transcript and an answer with the time](../demo.gif)
 
 Popcorn liefert Schlüsselbilder von den Szenenwechseln und ein Transkript mit Zeitstempeln.
 

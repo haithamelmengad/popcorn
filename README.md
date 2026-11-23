@@ -8,7 +8,7 @@
 
 Popcorn lets Claude Code and other MCP agents watch a video file on your machine.
 
-<!-- demo -->
+![Claude Code watching a video with Popcorn: key frames, transcript and an answer with the time](docs/demo.gif)
 
 It returns key frames from the scene changes and a timestamped transcript.
 
@@ -382,6 +382,8 @@ MIT License: see [LICENSE](LICENSE) for details.
 - [faster-whisper](https://github.com/guillaumekln/faster-whisper): CTranslate2
 - [FFmpeg](https://ffmpeg.org/): Video processing
 - [Model Context Protocol](https://modelcontextprotocol.io/): MCP spec
+
+The demo uses NASA footage of the launch of space shuttle Discovery on mission STS-121: [KSC-06-S-00171](https://images.nasa.gov/details/ksc_070406_sts121_launch). NASA content is generally not subject to copyright in the United States, see the [NASA media guidelines](https://www.nasa.gov/nasa-brand-center/images-and-media/). NASA does not endorse this project.
 
 ---
 

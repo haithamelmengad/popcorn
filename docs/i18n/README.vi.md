@@ -8,7 +8,7 @@
 
 Popcorn cho phép Claude Code và các agent MCP khác xem một tệp video trên máy của bạn.
 
-<!-- demo -->
+![Claude Code watching a video with Popcorn: key frames, transcript and an answer with the time](../demo.gif)
 
 Nó trả về các khung hình chính tại những chỗ chuyển cảnh và một bản chép lời có dấu thời gian.
 

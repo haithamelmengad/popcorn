@@ -8,7 +8,7 @@
 
 Met Popcorn kunnen Claude Code en andere MCP-agents een videobestand op je computer bekijken.
 
-<!-- demo -->
+![Claude Code watching a video with Popcorn: key frames, transcript and an answer with the time](../demo.gif)
 
 Je krijgt keyframes van de scènewissels en een transcript met tijdcodes.
 

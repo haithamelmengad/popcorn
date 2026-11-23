@@ -8,7 +8,7 @@
 
 Popcorn은 Claude Code와 다른 MCP 에이전트가 내 컴퓨터에 있는 동영상 파일을 볼 수 있게 해 줍니다.
 
-<!-- demo -->
+![Claude Code watching a video with Popcorn: key frames, transcript and an answer with the time](../demo.gif)
 
 장면이 바뀌는 지점의 키 프레임과 타임스탬프가 붙은 전사 텍스트를 돌려줍니다.
 
