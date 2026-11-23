@@ -107,12 +107,12 @@ For Claude Desktop, add this to `~/Library/Application Support/Claude/claude_des
 
 **Key Features:**
 
-- **Scene Detection** — Captures frames at visual transitions, not fixed intervals
-- **Local Transcription** — 4 backend options (mlx-whisper, faster-whisper, whisper-cpp, whisper)
-- **Inline Images** — Returns key frames directly in MCP responses
-- **Smart Presets** — Auto-configures for screencasts, presentations, movies, interviews
-- **Zero Config** — Just pass a video path and it works
-- **Privacy First** — Everything runs locally, no data leaves your machine. Whisper models are downloaded once, on first use
+- **Scene Detection**: Captures frames at visual transitions, not fixed intervals
+- **Local Transcription**: 4 backend options (mlx-whisper, faster-whisper, whisper-cpp, whisper)
+- **Inline Images**: Returns key frames directly in MCP responses
+- **Smart Presets**: Auto-configures for screencasts, presentations, movies, interviews
+- **Zero Config**: Just pass a video path and it works
+- **Privacy First**: Everything runs locally, no data leaves your machine. Whisper models are downloaded once, on first use
 
 ---
 
@@ -120,21 +120,21 @@ For Claude Desktop, add this to `~/Library/Application Support/Claude/claude_des
 
 ### Getting Started
 
-- **[Quick Start](#quick-start)** — Installation & setup
-- **[Tutorial](docs/tutorial.md)** — Step-by-step usage guide
-- **[MCP Tools](#mcp-tools)** — Available tools reference
+- **[Quick Start](#quick-start)**: Installation & setup
+- **[Tutorial](docs/tutorial.md)**: Step-by-step usage guide
+- **[MCP Tools](#mcp-tools)**: Available tools reference
 
 ### Guides
 
-- **[Transcription Backends](#transcription-backends)** — Choose the best backend for your system
-- **[Video Types & Objectives](#video-types)** — Presets for different content
-- **[Configuration](#configuration)** — Advanced parameters
+- **[Transcription Backends](#transcription-backends)**: Choose the best backend for your system
+- **[Video Types & Objectives](#video-types)**: Presets for different content
+- **[Configuration](#configuration)**: Advanced parameters
 
 ### Reference
 
-- **[Troubleshooting](docs/troubleshooting.md)** — Common issues & solutions
-- **[Agent Skill](skills/watch/SKILL.md)** — Instructions for AI agents
-- **[API Reference](#mcp-tools)** — Tool schemas & responses
+- **[Troubleshooting](docs/troubleshooting.md)**: Common issues & solutions
+- **[Agent Skill](skills/watch/SKILL.md)**: Instructions for AI agents
+- **[API Reference](#mcp-tools)**: Tool schemas & responses
 
 ---
 
@@ -142,12 +142,12 @@ For Claude Desktop, add this to `~/Library/Application Support/Claude/claude_des
 
 **Core Components:**
 
-1. **FFprobe** — Extracts video metadata (duration, resolution, codecs)
-2. **FFmpeg Scene Detection** — Finds visual transitions using `select='gt(scene,N)'` filter
-3. **Parallel Frame Extraction** — Captures JPEGs at scene change timestamps
-4. **Multi-Backend Transcription** — Whisper variants convert audio to timestamped text
-5. **Analysis Bundle** — Results saved to `.popcorn/` directory
-6. **MCP Response** — Returns metadata + inline base64 images
+1. **FFprobe**: Extracts video metadata (duration, resolution, codecs)
+2. **FFmpeg Scene Detection**: Finds visual transitions using `select='gt(scene,N)'` filter
+3. **Parallel Frame Extraction**: Captures JPEGs at scene change timestamps
+4. **Multi-Backend Transcription**: Whisper variants convert audio to timestamped text
+5. **Analysis Bundle**: Results saved to `.popcorn/` directory
+6. **MCP Response**: Returns metadata + inline base64 images
 
 ```
 Video File ──▶ FFprobe ──▶ FFmpeg ──▶ Whisper ──▶ Analysis Bundle
@@ -162,7 +162,7 @@ Video File ──▶ FFprobe ──▶ FFmpeg ──▶ Whisper ──▶ Analys
 
 | Tool | Description |
 |------|-------------|
-| `popcorn_analyze` | Main analysis — extracts frames, transcribes audio, returns results |
+| `popcorn_analyze` | Main analysis: extracts frames, transcribes audio, returns results |
 | `popcorn_suggest` | Probe video metadata and get recommended settings |
 | `popcorn_presets` | List available video types and objectives |
 | `popcorn_backends` | Detect your system and show transcription options |
@@ -370,18 +370,18 @@ claude-popcorn/
 
 ## License
 
-MIT License — see [LICENSE](LICENSE) for details.
+MIT License: see [LICENSE](LICENSE) for details.
 
 ---
 
 ## Acknowledgments
 
-- [OpenAI Whisper](https://github.com/openai/whisper) — Speech recognition
-- [whisper.cpp](https://github.com/ggerganov/whisper.cpp) — C++ port
-- [MLX Whisper](https://github.com/ml-explore/mlx-examples) — Apple Silicon
-- [faster-whisper](https://github.com/guillaumekln/faster-whisper) — CTranslate2
-- [FFmpeg](https://ffmpeg.org/) — Video processing
-- [Model Context Protocol](https://modelcontextprotocol.io/) — MCP spec
+- [OpenAI Whisper](https://github.com/openai/whisper): Speech recognition
+- [whisper.cpp](https://github.com/ggerganov/whisper.cpp): C++ port
+- [MLX Whisper](https://github.com/ml-explore/mlx-examples): Apple Silicon
+- [faster-whisper](https://github.com/guillaumekln/faster-whisper): CTranslate2
+- [FFmpeg](https://ffmpeg.org/): Video processing
+- [Model Context Protocol](https://modelcontextprotocol.io/): MCP spec
 
 ---
 
